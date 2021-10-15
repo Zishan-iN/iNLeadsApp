@@ -1,10 +1,14 @@
-const express =require('express')
-const dotenv =require('dotenv')
+const express = require('express')
+const dotenv = require('dotenv')
+const bodyParser = require('body-parser')
+const path = require('path')
 const connectDB =require('./config/db')
 const cors = require('cors')
+const app=express()
 
 //Load config.
 dotenv.config({path:'./config/config.env'})
+
 const corsOptions = {origin: 'http://localhost:4200'}
 //Cors
 app.use(cors(corsOptions))
@@ -12,9 +16,12 @@ app.use(express.json())
 
 connectDB()
 
-const app=express()
-
 const PORT = process.env.PORT || 3000
+
+//Sample get request.
+app.get('/', (req, res)=>{
+    res.send(`Server is running at port: ${PORT}`)
+})
 
 app.use('/api/leads', require('./api/lead'))
 

@@ -1,1 +1,5 @@
+#dependencies directory
 node_modules/
+
+#dotenv envireonment variable file
+config.env
