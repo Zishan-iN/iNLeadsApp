@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const Lead = require('../models/lead')
+const sequelize = require('../config/db')
 
 //Add Leads
 router.post('/create', async(req, res)=>{
-    const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body
+    const {id,firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body
     try {
-        const saved=Lead.create({
+        const saved= await sequelize.models.Lead.create({
+            id,
             firstName,
             emailAddress,
             phone,

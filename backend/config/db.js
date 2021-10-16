@@ -1,7 +1,9 @@
 require('dotenv').config({path:'./config/config.env'});
 const { Sequelize } = require('sequelize');
+const Lead  = require('../models/lead')
 
 const sequelize = new Sequelize(process.env.LOCAL_MYSQL_URI)
+sequelize.define('Lead', Lead)
 
 const connectDB = async()=>{
     try {
@@ -12,4 +14,4 @@ const connectDB = async()=>{
     }
 }
 
-module.exports =connectDB
+module.exports = sequelize
