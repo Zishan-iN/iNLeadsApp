@@ -1,8 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const bodyParser = require('body-parser')
 const path = require('path')
-// const connectDB =require('./config/db')
 const sequelize = require('./config/db')
 const cors = require('cors')
 const app=express()
@@ -15,8 +13,21 @@ const corsOptions = {origin: 'http://localhost:4200'}
 app.use(cors(corsOptions))
 app.use(express.json())
 
-// connectDB()
-sequelize.sync({force: true});
+
+const connectDB = async()=>{
+    try {
+        await sequelize.authenticate();
+        // sequelize.sync({force: true});
+        sequelize.sync({force: false});
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+}
+
+connectDB()
+
+
 const PORT = process.env.PORT || 3000
 
 //Sample get request.
