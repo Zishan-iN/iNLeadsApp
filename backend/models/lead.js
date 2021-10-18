@@ -2,7 +2,8 @@ const { DataTypes } = require("sequelize");
 
 const Lead = {
     id:{
-        type:DataTypes.STRING,
+        type:DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull:false,
         primaryKey:true
     },

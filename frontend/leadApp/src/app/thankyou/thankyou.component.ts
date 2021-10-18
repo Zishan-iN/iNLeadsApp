@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Lead } from 'src/models/lead.model';
+import { LeadService } from 'src/services/lead.service';
 
 @Component({
   selector: 'app-thankyou',
@@ -8,18 +10,31 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ThankyouComponent implements OnInit {
   
-  firstName:string='';
-  email:string=''
-  phone:string=''
-  constructor(private route: ActivatedRoute) { 
+  lead!: Lead;
+
+  constructor(
+    private route: ActivatedRoute,
+    private leadService: LeadService
+    ) { 
     this.route.queryParams.subscribe(params => {
-      this.firstName = params['FirstName'];
-      this.email = params['EmailAddress'];
-      this.phone = params['Phone'];
+      this.lead.firstName = params['FirstName'];
+      this.lead.emailAddress = params['EmailAddress'];
+      this.lead.phone = params['Phone'];
+      this.lead.intrestedProgram = params['mx_Interested_Programs'];
+      this.lead.intrestedUniversity = params['mx_Interested_University'];
     });
+
+    this.addLead(this.lead)
+
   }
 
   ngOnInit(): void {
+  }
+
+  addLead(lead: Lead) {
+    this.leadService.addLead(lead).subscribe(res=>{
+      console.log('Res', res)
+    })
   }
 
 }

@@ -4,7 +4,7 @@ const sequelize = require('../config/db')
 
 //Add Leads
 router.post('/create', async(req, res)=>{
-    const {id,firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body;
+    const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body;
     const founLead = await sequelize.models.Lead.findOne({
         where: {
             firstName: firstName,
@@ -22,7 +22,6 @@ router.post('/create', async(req, res)=>{
     }else{
         try {
             const saved= await sequelize.models.Lead.create({
-                id,
                 firstName,
                 emailAddress,
                 phone,
