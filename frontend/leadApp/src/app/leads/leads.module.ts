@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LeadsRoutingModule } from './leads-routing.module';
 import { LeadsLandingComponent } from './leads-landing/leads-landing.component';
 import { LeadsListComponent } from './leads-list/leads-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { LeadsListComponent } from './leads-list/leads-list.component';
   ],
   imports: [
     CommonModule,
-    LeadsRoutingModule
+    LeadsRoutingModule,
+    SharedModule
   ]
 })
 export class LeadsModule { }
