@@ -1,33 +1,51 @@
-<mat-card>
-  <mat-card-title>Login</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <p>
-        <mat-form-field>
-          <input type="text" matInput placeholder="Email" formControlName="email">
-          <mat-error *ngIf="loginForm?.get('email')?.errors?.email && !loginForm?.get('email')?.errors?.required">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="loginForm?.get('email')?.errors?.required">
-            Email is required
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field>
-          <input type="password" matInput placeholder="Password" formControlName="password">
-          <mat-error *ngIf="loginForm?.get('password')?.errors?.minlength || loginForm?.get('password')?.errors?.maxlength">
-            Password must be between 8 and 12 character.
-          </mat-error>
-          <mat-error *ngIf="loginForm?.get('password')?.errors?.required">
-            Password is required
-          </mat-error>
-        </mat-form-field>
-      </p>
-      <div class="button">
-        <button type="submit" mat-stroked-button color="primary">Login</button>
+<div class="container">
+  <div class="row">
+      <div class="col-md-8">
+        <div>
+          <img src="../../assets/images/login-image.png" alt="" class="img-fluid">
+        </div>
       </div>
+      <div class="col-md-4">
+        <mat-card class="mt-md-5">
+          <mat-card-title color="primary">Welcome!</mat-card-title>
+          <mat-card-subtitle class="text-center">Sign in to your Account</mat-card-subtitle>
+          <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="submit()">
+              <p>
+                <mat-form-field>
+                  <input type="text" matInput placeholder="Email" formControlName="email">
+                  <mat-error *ngIf="loginForm?.get('email')?.errors?.email && !loginForm?.get('email')?.errors?.required">
+                    Please enter a valid email address
+                  </mat-error>
+                  <mat-error *ngIf="loginForm?.get('email')?.errors?.required">
+                    Email is required
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field>
+                  <input type="password" matInput placeholder="Password" formControlName="password">
+                  <mat-error *ngIf="loginForm?.get('password')?.errors?.minlength || loginForm?.get('password')?.errors?.maxlength">
+                    Password must be between 8 and 12 character.
+                  </mat-error>
+                  <mat-error *ngIf="loginForm?.get('password')?.errors?.required">
+                    Password is required
+                  </mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-card-subtitle class="text-center">
+                  <a href="">Forgot Password?</a>
+                </mat-card-subtitle>
+              </p>
+                <div class="button my-4">
+                  <button type="submit" mat-stroked-button color="primary">Login</button>
+                </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  </div>
+</div>
 
-    </form>
-  </mat-card-content>
-</mat-card>
+
