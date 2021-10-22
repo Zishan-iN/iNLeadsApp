@@ -6,7 +6,8 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
 import { UserLandingComponent } from './user/user-landing/user-landing.component';
 
 const routes: Routes = [
-  {path:'', component: LoginComponent},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
   {path: 'thankyou', component: ThankyouComponent},
   {
     path: 'user',

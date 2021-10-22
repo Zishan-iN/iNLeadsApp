@@ -11,7 +11,7 @@ import { LeadService } from 'src/services/lead.service';
 export class ThankyouComponent implements OnInit {
   
   lead!: Lead;
-
+  studentname!:string;
   constructor(
     private route: ActivatedRoute,
     private leadService: LeadService
@@ -24,6 +24,8 @@ export class ThankyouComponent implements OnInit {
       this.lead.intrestedUniversity = params['mx_Interested_University'];
     });
 
+    //this.studentname= this.lead.firstName;
+    this.studentname= 'Dummy User';
     this.addLead(this.lead)
 
   }

@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   exports:[
     FormsModule,
@@ -33,6 +37,8 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatTableModule
   ]
 })
 export class SharedModule { }

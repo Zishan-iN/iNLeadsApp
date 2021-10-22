@@ -3,6 +3,8 @@ import { faArrowLeft, faDownload, faPaperPlane, faPen, faPlus, faSearch, faTrash
 import { Lead } from 'src/models/lead.model';
 import { LeadService } from 'src/services/lead.service';
 import * as XLSX from 'xlsx';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-leads-list',
@@ -22,6 +24,7 @@ export class LeadsListComponent implements OnInit {
   total!: number;
   leadList:Lead[]=[];
   fileName = 'Leads.xlsx';
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   testData: Lead[]=[
     {
       _id: "1", 
@@ -52,6 +55,7 @@ export class LeadsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllLeads()
+    
   }
 
   getAllLeads() {

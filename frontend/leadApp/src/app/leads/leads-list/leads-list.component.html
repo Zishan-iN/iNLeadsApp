@@ -1,147 +1,38 @@
-<div class="col-md-12 py-2 px-4 bg-white">
-    <div class="col-md-12 d-flex mb-2">
-      <div class="ml-auto p-2">
-        <a
-          [routerLink]="['/admin/admin-dashboard']"
-          class="btn btn-secondary btn-sm"
-          tooltip="Back to dashboard"
-          placement="bottom"
-        >
-          <fa-icon [icon]="faArrowLeft" class="fa-arrow"></fa-icon>
-        </a>
-      </div>
-    </div>
-    <div class="panel panel-default my-5">
-      <!-- <app-alert-message></app-alert-message> -->
-      <div class="panel-heading d-flex">
-        <h2 class="mr-auto p-2">Leads</h2>
-        <div class="p-2">
-          <select
-            class="form-control"
-            name="searcByFilter"
-            id="searcByFilter"
-            (change)="onFilterChange($event)"
-          >
-            <option value="" disabled selected>Filter By</option>
-            <option value="emp">Name</option>
-            <option value="offEmp">Email</option>
-            <option value="offEmp">Phone</option>
-            <option value="offEmp">Course</option>
-            <option value="offEmp">University</option>
-            <option value="offEmp">Date</option>
-          </select>
-        </div>
-        <div class="p-2">
-          <!-- <ng-multiselect-dropdown
-            name="employees"
-            id="employees"
-            [placeholder]="'Select Employee'"
-            [(ngModel)]="selectedItems"
-            [settings]="dropdownSettings"
-            [data]="employeesList"
-            (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)"
-            (onDeSelect)="onDeSelect($event)"
-            [disabled]="!isEnable"
-          >
-          </ng-multiselect-dropdown> -->
-        </div>
-        <div class="p-2">
-          <!-- <button
-            [disabled]="!isEnable"
-            type="button"
-            class="btn btn-primary"
-            (click)="addMember()"
-          >
-            Add
-          </button> -->
-        </div>
-        <div class="p-2">
-          <select
-            name=""
-            id=""
-            class="form-control"
-            (change)="changeItemPerPage($event)"
-          >
-            <option value="10">Item per page 10</option>
-            <option value="15">Item per page 15</option>
-            <option value="25">Item per page 25</option>
-          </select>
-        </div>
-        <div class="p-2 my-1">
-          <button
-            class="btn btn-primary btn-sm"
-            (click)="exportexcel()"
-            tooltip="Report"
-            placement="top"
-          >
-            <fa-icon [icon]="faDownload" class="fa-arrow"></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="panel-body table-responsive">
-        <table
-          *ngIf="leadList.length > 0; else noData"
-          class="table table-striped table-bordered table-sm"
-          id="excel-table"
-        >
-          <thead class="text-center">
-            <tr>
-              <th>#.</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Intrested Program</th>
-              <th>Intrested University</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let lead of leadList
-                  | paginate
-                    : {
-                        itemsPerPage: pageSize,
-                        currentPage: currentPage
-                      };
-                let i = index
-              "
-            >
-              <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-              <td>{{lead.firstName}}</td>
-              <td>{{lead.emailAddress}}</td>
-              <td>{{lead.phone}}</td>
-              <td>{{lead.intrestedProgram}}</td>
-              <td>{{lead.intrestedUniversity}}</td>
-              <td>
-                <a class="text-danger" (click)="deleteLead(lead._id)">
-                  <fa-icon [icon]="faTrash" class="fa-arrow"></fa-icon>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ng-template #noData>
-          <div class="alert alert-warning mt-1">
-            <span>No data found!</span>
-          </div>
-        </ng-template>
-        <div class="text-center">
-          <pagination-controls
-            (pageChange)="pageChanged($event)"
-            previousLabel="Previous"
-            nextLabel="Next"
-          >
-          </pagination-controls>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-  <button mat-raised-button>Basic</button>
+<div class="container">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="testData">
   
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons 
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>  
+</div>
