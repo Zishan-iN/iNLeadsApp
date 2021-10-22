@@ -15,7 +15,11 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     LeadsRoutingModule,
-    SharedModule
+    SharedModule,
+  ],
+  exports:[
+    LeadsLandingComponent,
+    LeadsListComponent
   ]
 })
 export class LeadsModule { }

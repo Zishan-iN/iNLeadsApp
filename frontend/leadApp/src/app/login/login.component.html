@@ -1,5 +1,16 @@
 <div class="container">
   <div class="row">
+    <div class="col-md-12">
+      <header>
+        <nav id="navbar-top" class="navbar navbar-light">
+            <a class="navbar-brand bg-dark" href="#homeBlock">
+                <img alt="Logo University" class="brandLogo" src="../assets/images/iNLogo.png" />
+            </a>
+        </nav>
+      </header>
+    </div>
+  </div>
+  <div class="row">
       <div class="col-md-8">
         <div>
           <img src="../../assets/images/login-image.png" alt="" class="img-fluid">
@@ -24,7 +35,13 @@
               </p>
               <p>
                 <mat-form-field>
-                  <input type="password" matInput placeholder="Password" formControlName="password">
+                  <input [type]="hidePassword ? 'password' : 'text'" matInput placeholder="Password" formControlName="password">
+                  <fa-icon *ngIf="hidePassword" [icon]="faEye" class="field-icon" (click)="togglePassword('show')"
+                  tooltip="Show password" placement="bottom">
+                  </fa-icon>
+                  <fa-icon *ngIf="!hidePassword" [icon]="faEyeSlash" class="field-icon"
+                    (click)="togglePassword('hide')" tooltip="Hide password" placement="bottom">
+                  </fa-icon>
                   <mat-error *ngIf="loginForm?.get('password')?.errors?.minlength || loginForm?.get('password')?.errors?.maxlength">
                     Password must be between 8 and 12 character.
                   </mat-error>
@@ -45,6 +62,18 @@
           </mat-card-content>
         </mat-card>
       </div>
+  </div>
+  <div class="row">
+    <footer>
+      <div class="container text-center">
+          <hr>
+          <p>&copy; iNurture Education Solution Pvt. Ltd.</p>
+          <p>Niton Compound, # 11/4 A, Block – B1, Palace Road, Vasanthnagar, Bangalore – 560052</p>
+          <p>Tel: +91-80-4257-6666,
+             Email: admission@inurture.co.in
+          </p>
+      </div>
+  </footer>
   </div>
 </div>
 
