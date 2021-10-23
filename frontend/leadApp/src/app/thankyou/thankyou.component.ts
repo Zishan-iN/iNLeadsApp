@@ -9,25 +9,28 @@ import { LeadService } from 'src/services/lead.service';
   styleUrls: ['./thankyou.component.css']
 })
 export class ThankyouComponent implements OnInit {
-  
-  lead!: Lead;
   studentname!:string;
   constructor(
     private route: ActivatedRoute,
     private leadService: LeadService
     ) { 
     this.route.queryParams.subscribe(params => {
-      this.lead.firstName = params['FirstName'];
-      this.lead.emailAddress = params['EmailAddress'];
-      this.lead.phone = params['Phone'];
-      this.lead.intrestedProgram = params['mx_Interested_Programs'];
-      this.lead.intrestedUniversity = params['mx_Interested_University'];
+      let firstName = params['FirstName'];
+      let emailAddress = params['EmailAddress'];
+      let phone = params['Phone'];
+      let intrestedProgram = params['mx_Interested_Programs'];
+      let intrestedUniversity = params['mx_Interested_University'];
+
+      this.studentname =firstName
+      let lead =new Lead()
+      lead.firstName = firstName
+      lead.emailAddress = emailAddress
+      lead.phone = phone
+      lead.intrestedProgram =intrestedProgram
+      lead.intrestedUniversity =intrestedUniversity
+      this.addLead(lead)
+      // console.log(firstName, emailAddress, phone, intrestedProgram, intrestedUniversity)
     });
-
-    //this.studentname= this.lead.firstName;
-    this.studentname= 'Dummy User';
-    this.addLead(this.lead)
-
   }
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
@@ -8,6 +9,7 @@ import { UserLandingComponent } from './user/user-landing/user-landing.component
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'thankyou', component: ThankyouComponent},
   {
     path: 'user',

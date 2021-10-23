@@ -58,7 +58,7 @@ margin-right: 4px;
 color: #999;
 }
 
-.sidebar .nav-link.active {
+.sidebar .nav-item.active {
 color: #007bff;
 }
 

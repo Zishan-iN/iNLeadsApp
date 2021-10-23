@@ -5,17 +5,13 @@ import { UserLandingComponent } from './user-landing/user-landing.component';
 
 const routes: Routes = [
   {
-    path:'', 
-    redirectTo: 'dashbaord',
-    pathMatch: 'full',
-  },
-  { 
-    path:'dashbaord',
-    component: UserLandingComponent,
-    children:[
+   path: '',
+   component: UserLandingComponent,
+   children:[
+      {path: '', redirectTo: 'dashboard'},
       {path: 'dashboard', component: UserDashboardComponent}
-    ]
-  }
+   ]
+  },
 ];
 
 @NgModule({

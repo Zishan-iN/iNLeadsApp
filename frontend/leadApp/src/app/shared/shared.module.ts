@@ -9,9 +9,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { MatTableModule } from '@angular/material/table';
     MatCardModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    DashboardComponent
   ]
 })
 export class SharedModule { }

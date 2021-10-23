@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { UserLandingComponent } from './user-landing/user-landing.component';
 import { SharedModule } from '../shared/shared.module';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { LeadsListComponent } from '../leads/leads-list/leads-list.component';
 import { LeadsModule } from '../leads/leads.module';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 
 @NgModule({

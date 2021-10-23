@@ -9,13 +9,15 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ThankyouComponent,
     LoginComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
