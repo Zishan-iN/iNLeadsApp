@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  constructor() { }
+  forgotPassword: FormGroup
+  constructor(
+    private fb: FormBuilder
+  ) { 
+    this.forgotPassword = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  submit(){
+    
   }
 
 }

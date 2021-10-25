@@ -114,3 +114,24 @@ margin-top: -12px;
 position: relative;
 z-index: 2;
 }
+
+/*Login, Forgot Password Styling*/
+  .mat-form-field {
+    width: 100%;
+    /* min-width: 250px; */
+  }
+
+  mat-card-title,
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button{
+    width: 100%;
+  }

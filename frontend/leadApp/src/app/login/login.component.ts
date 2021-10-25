@@ -23,7 +23,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submit(){}
+  submit(){
+    if(!this.loginForm.valid){
+      return;
+    }
+
+    if(this.loginForm.valid){
+      console.log("FormVal",this.loginForm.value)
+    }
+  }
 
   togglePassword(toggleString: string) {
     if (toggleString === 'hide') {
