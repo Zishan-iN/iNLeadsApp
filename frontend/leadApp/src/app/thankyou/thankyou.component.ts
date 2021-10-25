@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Lead } from 'src/models/lead.model';
-import { LeadService } from 'src/services/lead.service';
+import { Lead } from 'src/app/models/lead.model';
+import { LeadService } from 'src/app/services/lead.service';
 
 @Component({
   selector: 'app-thankyou',

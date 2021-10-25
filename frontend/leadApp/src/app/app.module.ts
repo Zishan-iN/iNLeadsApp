@@ -21,7 +21,7 @@ import { FooterComponent } from './footer/footer.component';
     PagenotfoundComponent,
     ForgotPasswordComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,10 +10,12 @@ import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AlertMessageComponent } from './alert-message/alert-message.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    AlertMessageComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatInputModule,
     MatPaginatorModule,
     MatTableModule,
-    DashboardComponent
+    DashboardComponent,
+    AlertMessageComponent
   ]
 })
 export class SharedModule { }

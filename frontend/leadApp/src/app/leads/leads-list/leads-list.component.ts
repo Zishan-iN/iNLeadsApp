@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { faArrowLeft, faDownload, faPaperPlane, faPen, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Lead } from 'src/models/lead.model';
-import { LeadService } from 'src/services/lead.service';
+import { Lead } from 'src/app/models/lead.model';
+import { LeadService } from 'src/app/services/lead.service';
 import * as XLSX from 'xlsx';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';

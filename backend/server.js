@@ -50,6 +50,8 @@ app.get('/', (req, res)=>{
 })
 
 app.use('/api/leads', require('./api/lead'))
+app.use('/api/role', require('./api/role'))
+app.use('/api/user', require('./api/user'))
 
 app.listen(
     PORT, 

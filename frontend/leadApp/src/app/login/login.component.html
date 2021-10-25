@@ -11,6 +11,7 @@
           <mat-card-title color="primary" class="text-center">Welcome!</mat-card-title>
           <mat-card-subtitle class="text-center">Sign in to your Account</mat-card-subtitle>
           <mat-card-content>
+            <app-alert-message></app-alert-message>
             <form [formGroup]="loginForm" (ngSubmit)="submit()">
               <p>
                 <mat-form-field>

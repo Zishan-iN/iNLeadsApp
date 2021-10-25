@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -13,10 +14,12 @@ const routes: Routes = [
   {path: 'thankyou', component: ThankyouComponent},
   {
     path: 'user',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {
     path: 'leads',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule),
   },
   {

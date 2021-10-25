@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup
   loading = false;
@@ -13,6 +15,7 @@ export class LoginComponent implements OnInit {
   faEyeSlash = faEyeSlash;
   faEye = faEye;
   hidePassword: boolean = true;
+  options = { autoClose: true, redirect: false, redirectLink: '' };
   constructor(private formBuilder: FormBuilder) {
     this.loginForm=this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
