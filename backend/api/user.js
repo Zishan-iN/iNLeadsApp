@@ -90,6 +90,7 @@ router.post('/forgot-password', async(req, res)=>{
                 }
                 res.status(201).json({
                     status: "success",
+                    info: info.response,
                     message: `Reset Link Sent Successfully to ${email} with further instructions.`
                 });
             })

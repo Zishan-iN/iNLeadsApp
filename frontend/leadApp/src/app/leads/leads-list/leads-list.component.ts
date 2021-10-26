@@ -7,13 +7,14 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-leads-list',
   templateUrl: './leads-list.component.html',
   styleUrls: ['./leads-list.component.css']
 })
-export class LeadsListComponent implements OnInit, AfterViewInit {
+export class LeadsListComponent implements OnInit {
   faSearch = faSearch;
   faPlus = faPlus;
   faDownload = faDownload;
@@ -26,8 +27,10 @@ export class LeadsListComponent implements OnInit, AfterViewInit {
   total!: number;
   // leadList:Lead[]=[];
   fileName = 'Leads.xlsx';
-  displayedColumns: string[] = ['name', 'email', 'phone', 'course', 'university'];
-  dataSource = new MatTableDataSource<Lead>();
+  displayedColumns: string[] = ['select','name', 'email', 'phone', 'course', 'university'];
+  //dataSource = new MatTableDataSource<Lead>();
+  dataSource:any;
+  selection:any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lead:any=[];
@@ -40,18 +43,37 @@ export class LeadsListComponent implements OnInit, AfterViewInit {
     this.getAllLeads()
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
   getAllLeads() {
     this.leadService.getAllLeads().subscribe(res=>{
       console.log('Res', res)
-      let data:any=res;
-      this.dataSource = data
-      // console.log('Res', this.leadList)
+      this.dataSource = new MatTableDataSource<Lead>(res)
+      this.selection = new SelectionModel<Lead>(true, []);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     })
+  }
+
+  removeSelectedRows(){
+    // this.selection.selected.forEach(item => {
+    //   let index: number = this.data.findIndex(d => d === item);
+    //   console.log(this.data.findIndex(d => d === item));
+    //   this.data.splice(index,1)
+    //   this.dataSource = new MatTableDataSource<Element>(this.data);
+    // });
+    // this.selection = new SelectionModel<Element>(true, []);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(
+          (row:any) => this.selection.select(row));
   }
 
   pageChanged(event:any): void {

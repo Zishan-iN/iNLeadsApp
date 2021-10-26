@@ -9,6 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
 
@@ -28,7 +29,8 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
     MatCardModule,
     MatInputModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule
   ],
   exports:[
     FormsModule,
@@ -40,6 +42,7 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
     MatInputModule,
     MatPaginatorModule,
     MatTableModule,
+    MatCheckboxModule,
     DashboardComponent,
     AlertMessageComponent
   ]
