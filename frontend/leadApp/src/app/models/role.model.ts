@@ -1,6 +1,9 @@
 export class Role{
-    public id!: string;
+    public roleId!: string;
     public roleName!:string;
     public createdAt!:string;
     public updatedAt!: string;
+    // admin = 'admin',
+    // user ='user',
+    // suadmin ='suadmin'
 }

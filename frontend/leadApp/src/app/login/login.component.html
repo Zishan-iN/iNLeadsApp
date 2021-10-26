@@ -9,7 +9,7 @@
       <div class="col-md-4">
         <mat-card class="mt-md-5">
           <mat-card-title color="primary" class="text-center">Welcome!</mat-card-title>
-          <mat-card-subtitle class="text-center">Sign in to your Account</mat-card-subtitle>
+          <mat-card-subtitle class="text-center">Sign in to check leads</mat-card-subtitle>
           <mat-card-content>
             <app-alert-message></app-alert-message>
             <form [formGroup]="loginForm" (ngSubmit)="submit()">
@@ -42,7 +42,7 @@
                 </mat-form-field>
               </p>
               <div class="button my-4">
-                <button type="submit" mat-raised-button color="primary">SIGN IN</button>
+                <button type="submit" mat-raised-button color="primary" class="block-btn">SIGN IN</button>
               </div>
               <p>
                 <mat-card-subtitle class="text-center" color="primary">

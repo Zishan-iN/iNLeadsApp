@@ -21,13 +21,11 @@ const lead = sequelize.define('Lead', Lead)
 const user = sequelize.define('User', User)
 const role = sequelize.define('Role', Role)
 
-// Option 1
-role.hasOne(user, {
-    foreignKey: 'roleId'
+role.hasMany(user, {
+    foreignKey: "roleId",
 });
-
-user.belongsTo(role, {
-    foreignKey: 'roleId'
+user.belongsTo(role,{
+    foreignKey: "roleId",
 });
 
 module.exports = sequelize

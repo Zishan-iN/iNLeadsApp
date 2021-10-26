@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { AlertMessageService } from '../services/alert-message.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +19,12 @@ export class LoginComponent implements OnInit {
   faEye = faEye;
   hidePassword: boolean = true;
   options = { autoClose: true, redirect: false, redirectLink: '' };
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private alertService: AlertMessageService,
+    private router:Router
+    ) {
     this.loginForm=this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
@@ -32,7 +40,12 @@ export class LoginComponent implements OnInit {
     }
 
     if(this.loginForm.valid){
-      console.log("FormVal",this.loginForm.value)
+      this.authService.login(this.loginForm.value).subscribe(res=>{
+        console.log('Res', res)
+        this.router.navigate(['/user'])
+      },err=>{
+        this.alertService.error(err, this.options);
+      })
     }
   }
 

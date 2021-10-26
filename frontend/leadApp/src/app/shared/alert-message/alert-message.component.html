@@ -1,6 +1,6 @@
 <div *ngFor="let alert of alerts" class="{{cssClass(alert)}}" role="alert">
     {{alert.message}}
-    <button type="button" class="close" (click)="removeAlert(alert)">
+    <button type="button" class="close btn btn-default pull-right" (click)="removeAlert(alert)">
       <span aria-hidden="true">&times;</span>
     </button>
 </div>

@@ -127,11 +127,11 @@ z-index: 2;
     justify-content: center;
   }
 
-  .button {
+  /* .button {
     display: flex;
     justify-content: flex-end;
-  }
+  } */
 
-  button{
+  button.block-btn{
     width: 100%;
   }

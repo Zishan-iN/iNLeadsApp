@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const Role = {
-    id:{
+    roleId:{
         type:DataTypes.INTEGER,
         autoIncrement: true,
         allowNull:false,

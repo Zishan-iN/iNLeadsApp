@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
+import { Role } from './models/role.model';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { UserLandingComponent } from './user/user-landing/user-landing.component';
@@ -15,11 +16,13 @@ const routes: Routes = [
   {
     path: 'user',
     canActivate: [AuthGuard],
+    data: { roles: ['admin', 'user'] },
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {
     path: 'leads',
     canActivate: [AuthGuard],
+    data: { roles: ['admin', 'user'] },
     loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule),
   },
   {
