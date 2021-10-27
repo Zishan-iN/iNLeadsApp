@@ -10,8 +10,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSortModule} from '@angular/material/sort';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
+import { MatFormFieldModule } from '@angular/material/form-field/';
 
 @NgModule({
   declarations: [
@@ -28,9 +30,11 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    MatFormFieldModule,
     MatPaginatorModule,
     MatTableModule,
-    MatCheckboxModule
+    MatSortModule,
+    MatCheckboxModule,
   ],
   exports:[
     FormsModule,
@@ -40,9 +44,11 @@ import { AlertMessageComponent } from './alert-message/alert-message.component';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    MatFormFieldModule,
     MatPaginatorModule,
     MatTableModule,
     MatCheckboxModule,
+    MatSortModule,
     DashboardComponent,
     AlertMessageComponent
   ]

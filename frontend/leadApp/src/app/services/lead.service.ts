@@ -28,4 +28,8 @@ export class LeadService {
     return this.http.delete<any>(this.baseApiUrl + `/${id}`);
   }
 
+  deleteSelectedLeads(idArray: any[]): Observable<any[]> {
+    return this.http.post<any[]>(this.baseApiUrl + '/delete-selected', idArray);
+  }
+
 }

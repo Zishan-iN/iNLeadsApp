@@ -22,18 +22,15 @@ export class LeadsListComponent implements OnInit {
   faTrash = faTrash;
   faPaperPlane=faPaperPlane;
   faArrowLeft=faArrowLeft;
-  currentPage = 1;
-  pageSize = 10;
-  total!: number;
-  // leadList:Lead[]=[];
   fileName = 'Leads.xlsx';
-  displayedColumns: string[] = ['select','name', 'email', 'phone', 'course', 'university'];
-  //dataSource = new MatTableDataSource<Lead>();
+  displayedColumns: string[] = ['select','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
   dataSource:any;
   selection:any;
+  data:any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lead:any=[];
+  search!: string;
   constructor(
     private leadService: LeadService,
     private _liveAnnouncer: LiveAnnouncer
@@ -45,22 +42,22 @@ export class LeadsListComponent implements OnInit {
 
   getAllLeads() {
     this.leadService.getAllLeads().subscribe(res=>{
-      console.log('Res', res)
       this.dataSource = new MatTableDataSource<Lead>(res)
       this.selection = new SelectionModel<Lead>(true, []);
+      this.data =Object.assign(res);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     })
   }
 
   removeSelectedRows(){
-    // this.selection.selected.forEach(item => {
-    //   let index: number = this.data.findIndex(d => d === item);
-    //   console.log(this.data.findIndex(d => d === item));
-    //   this.data.splice(index,1)
-    //   this.dataSource = new MatTableDataSource<Element>(this.data);
-    // });
-    // this.selection = new SelectionModel<Element>(true, []);
+    let idArray:any[]=[]
+    this.selection.selected.forEach((item:any) => {
+      idArray.push(item.id)
+      this.leadService.deleteSelectedLeads(idArray).subscribe(res=>{
+        this.getAllLeads()
+      })
+    });
   }
 
   isAllSelected() {
@@ -76,23 +73,10 @@ export class LeadsListComponent implements OnInit {
           (row:any) => this.selection.select(row));
   }
 
-  pageChanged(event:any): void {
-    this.currentPage = event;
-  }
 
-  changeItemPerPage(event:any): void {
-    this.pageSize = event;
-  }
-
-  onFilterChange(event:any){
-    console.log('Do something')
-  }
-
-  deleteLead(id: any){
-    console.log('id', id)
-    this.leadService.deleteLead(id).subscribe(res=>{
-      console.log('res', res)
-    })
+  applyFilter(){
+    console.log(this.search)
+    this.dataSource.filter = this.search ? this.search.trim().toLowerCase() : '';
   }
 
   exportexcel() {
@@ -103,7 +87,8 @@ export class LeadsListComponent implements OnInit {
     XLSX.writeFile(wb, this.fileName);
   }
 
-  announceSortChange(sortState: any) {
+  announceSortChange(sortState: Sort) {
+    console.log('sortState', sortState)
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {

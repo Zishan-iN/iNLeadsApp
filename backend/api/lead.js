@@ -113,6 +113,29 @@ router.delete('/delete/:id', async(req, res)=>{
     }
 })
 
+//Delete multiple leads at once.
+router.post('/delete-selected', async(req,res)=>{
+    try {
+        const idArray = req.body
+        console.log('Arr', idArray)
+        const leadsDeleted = await sequelize.models.Lead.destroy({
+            where: { id:  idArray} 
+        })
+        if(leadsDeleted){
+            res.status(200).json({
+                status: "success",
+                message: "Selected leads are deleted successfully."
+            })
+        }
+        
+    } catch (error) {
+        res.status(500).json({
+            status: "failure",
+            error: err.message
+        })
+    }
+})
+
 
 
 module.exports =router

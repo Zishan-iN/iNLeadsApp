@@ -115,6 +115,15 @@ position: relative;
 z-index: 2;
 }
 
+.lead-delete-icon{
+  float: right;
+  cursor: pointer;
+  color: #999;
+}
+.lead-delete-icon:hover{
+  color: #673ab7;
+}
+
 /*Login, Forgot Password Styling*/
   .mat-form-field {
     width: 100%;
