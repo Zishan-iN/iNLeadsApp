@@ -4,6 +4,7 @@
      <div class="d-flex bd-highlight mx-3">
         <div class="p-2 flex-grow-1 bd-highlight">
             <input type="text" [(ngModel)]="search" placeholder="Filter" class="form-control w-25" (keyup)="applyFilter()">
+            <!-- <fa-icon  [icon]="faSearch" class="cross-icon" tooltip="Show password" placement="bottom"></fa-icon> -->
         </div>
         <div class="p-2 bd-highlight">
           <fa-icon [icon]="faTrash" class="lead-delete-icon mx-4 my-3" (click)="removeSelectedRows()"
