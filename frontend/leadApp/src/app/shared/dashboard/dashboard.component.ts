@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
+  navbarOpen = false;
   constructor(
     private authService: AuthService
   ) { }
@@ -15,6 +16,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+  
   logout(){
     this.authService.logout();
   }

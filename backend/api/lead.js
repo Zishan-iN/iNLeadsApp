@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const sequelize = require('../config/db')
+const moment = require('moment')
 
 //Add Leads
 router.post('/create', async(req, res)=>{
@@ -117,7 +118,6 @@ router.delete('/delete/:id', async(req, res)=>{
 router.post('/delete-selected', async(req,res)=>{
     try {
         const idArray = req.body
-        console.log('Arr', idArray)
         const leadsDeleted = await sequelize.models.Lead.destroy({
             where: { id:  idArray} 
         })

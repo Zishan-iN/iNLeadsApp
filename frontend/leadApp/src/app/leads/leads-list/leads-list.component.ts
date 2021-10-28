@@ -23,7 +23,7 @@ export class LeadsListComponent implements OnInit {
   faPaperPlane=faPaperPlane;
   faArrowLeft=faArrowLeft;
   fileName = 'Leads.xlsx';
-  displayedColumns: string[] = ['select','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
+  displayedColumns: string[] = ['select','createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
   dataSource:any;
   selection:any;
   data:any;
@@ -31,6 +31,7 @@ export class LeadsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lead:any=[];
   search!: string;
+  responsive=true
   constructor(
     private leadService: LeadService,
     private _liveAnnouncer: LiveAnnouncer

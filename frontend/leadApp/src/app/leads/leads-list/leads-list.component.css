@@ -6,11 +6,62 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-.cross-icon{
-  float: right;
-  cursor: pointer;
-  color: #aaa;
-  margin-top: -12px;
-  position: relative;
-  z-index: 2;
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
+
+@media screen and (max-width: 767px) {
+  .mat-table {
+    vertical-align: middle
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+  .mat-table .mat-header-cell:first-child{
+    display: block;
+    border-bottom: none;
+  }
+  .mat-table .mat-header-cell{
+    display: none;
+  }
+ 
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+  
+  /* .mat-table .mat-row:nth-child(even) {background: #CCC}
+  .mat-table .mat-row:nth-child(odd) {background: #FFF} */
+ 
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height:30px;
+    margin-bottom: 4%;
+    padding: 15px;
+  }
+  .mat-table .mat-cell:before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+    
+    font-size: .85em;
+  }
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+    .mat-table .mat-cell:first-child {
+    margin-top: 4%;
+  }
+}
+
