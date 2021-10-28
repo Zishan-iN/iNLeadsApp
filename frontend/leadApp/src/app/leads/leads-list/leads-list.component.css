@@ -22,11 +22,18 @@ tr:nth-child(even) {
   .mat-table .mat-header-cell:first-child{
     display: block;
     border-bottom: none;
+    display: flex !important;
+    justify-content: flex-end !important
   }
+  
   .mat-table .mat-header-cell{
     display: none;
   }
  
+  /* mat-header-row{
+    
+  } */
+
   .mat-table .mat-row {
     border-bottom: 5px solid #ddd;
     display: block;
@@ -41,9 +48,9 @@ tr:nth-child(even) {
     font-size: 1em;
     text-align: right;
     font-weight: bold;
-    height:30px;
-    margin-bottom: 4%;
-    padding: 15px;
+    height:45px;
+    margin-bottom: 5%;
+    padding: 8px;
   }
   .mat-table .mat-cell:before {
     /*
@@ -62,6 +69,9 @@ tr:nth-child(even) {
   }
     .mat-table .mat-cell:first-child {
     margin-top: 4%;
+  }
+  .mat-checkbox.mat-accent .mat-checkbox-inner-container {
+    margin-left: 50px !important;
   }
 }
 

@@ -13,6 +13,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AuthGuard } from './auth/auth.guard';
     ForgotPasswordComponent,
     HeaderComponent,
     FooterComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

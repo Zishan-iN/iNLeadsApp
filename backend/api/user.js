@@ -2,17 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const sequelize = require('../config/db')
-var nodemailer = require('nodemailer');
-
-let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: '',
-      pass: ''
-    },
-});
+const nodemailer = require('nodemailer');
 
 //Login
 router.post('/login', async(req, res)=>{
@@ -71,28 +61,38 @@ router.post('/forgot-password', async(req, res)=>{
               message: 'User not registred.'
             });
         }else{
+            let testAccount = await nodemailer.createTestAccount(); //Remove this line for production
+            let transporter = nodemailer.createTransport({
+                host: "smtp.ethereal.email",
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: testAccount.user, // generated ethereal user
+                    pass: testAccount.pass, // generated ethereal password
+                },
+            });
             let mailOptions ={
-                from: `Lead App <zishan@inurture.co.in>`,
+                from: `iNurture Lead App <zishan@inurture.co.in>`,
                 to: `${email}`,
                 subject: 'Change Password Request!',
                 html: `<h3>Dear ${user.name},\n</h3>
                 <h4>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n</h4>
-                <p>Please click on the link, or paste this into your browser to complete the process:\n\n</p>
-                <p>http://localhost:4200/reset-password?token=123 \n\n</p> 
+                <p>Please click on the link, or paste link address into your browser to complete the process:\n\n</p>
+                <p><a href="http://localhost:4200/reset-password?token=123">Reset Password</a> \n\n</p> 
                 <p>If you did not request this, please ignore this email and your password will remain unchanged.\n<p>`
             }
             transporter.sendMail(mailOptions, (error,info)=>{
-                if(error){
-                    return res.status(500).json({
-                        status: "failure",
-                        error: error.message
-                    })
+                console.log('URL', nodemailer.getTestMessageUrl(info))
+                if(info){
+                    res.status(201).json({
+                        status: "success",
+                        message: `Reset link sent successfully to ${email}.`,
+                    });
                 }
-                res.status(201).json({
-                    status: "success",
-                    info: info.response,
-                    message: `Reset Link Sent Successfully to ${email} with further instructions.`
-                });
+                return res.status(500).json({
+                    status: "failure",
+                    error: error.message
+                })
             })
         }
     } catch (error) {

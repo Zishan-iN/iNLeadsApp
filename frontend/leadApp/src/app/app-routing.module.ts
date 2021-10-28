@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LoginComponent } from './login/login.component';
 import { Role } from './models/role.model';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { UserLandingComponent } from './user/user-landing/user-landing.component';
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'thankyou', component: ThankyouComponent},
   {
     path: 'user',

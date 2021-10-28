@@ -29,7 +29,6 @@ export class ThankyouComponent implements OnInit {
       lead.intrestedProgram =intrestedProgram
       lead.intrestedUniversity =intrestedUniversity
       this.addLead(lead)
-      // console.log(firstName, emailAddress, phone, intrestedProgram, intrestedUniversity)
     });
   }
 
@@ -39,6 +38,9 @@ export class ThankyouComponent implements OnInit {
   addLead(lead: Lead) {
     this.leadService.addLead(lead).subscribe(res=>{
       console.log('Res', res)
+      // if(res.success){
+
+      // }
     })
   }
 
