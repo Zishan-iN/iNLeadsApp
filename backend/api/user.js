@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const sequelize = require('../config/db')
 const nodemailer = require('nodemailer');
+// const sendmail = require('sendmail')({silent: true, devPort: 3000})
 
 //Login
 router.post('/login', async(req, res)=>{
@@ -61,7 +62,7 @@ router.post('/forgot-password', async(req, res)=>{
               message: 'User not registred.'
             });
         }else{
-            let testAccount = await nodemailer.createTestAccount(); //Remove this line for production
+            let testAccount = await nodemailer.createTestAccount();  //Remove this line for production
             let transporter = nodemailer.createTransport({
                 host: "smtp.ethereal.email",
                 port: 587,
@@ -94,6 +95,20 @@ router.post('/forgot-password', async(req, res)=>{
                     error: error.message
                 })
             })
+            // console.log('Runn')
+            // sendmail({
+            //     from: `zish4u@gamil.com`,
+            //     to: `${email}`,
+            //     subject: 'Change Password Request!',
+            //     html: `<h3>Dear ${user.name},\n</h3>
+            //     <h4>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n</h4>
+            //     <p>Please click on the link, or paste link address into your browser to complete the process:\n\n</p>
+            //     <p><a href="http://localhost:4200/reset-password?token=123">Reset Password</a> \n\n</p> 
+            //     <p>If you did not request this, please ignore this email and your password will remain unchanged.\n<p>`
+            // },(err, reply)=>{
+            //     console.log(err)
+            //     console.dir(reply)
+            // })
         }
     } catch (error) {
         res.status(500).json({

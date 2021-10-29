@@ -41,7 +41,13 @@ export class LoginComponent implements OnInit {
 
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe(res=>{
-        this.router.navigate(['/user'])
+        const role: any = res.role
+        if(role ==='admin'){
+          this.router.navigate(['/admin'])
+        }
+        if(role ==='user'){
+          this.router.navigate(['/user'])
+        }
       },err=>{
         this.alertService.error(err, this.options);
       })

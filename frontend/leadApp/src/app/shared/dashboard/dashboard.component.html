@@ -7,7 +7,7 @@
   </button>
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
     <ul class="navbar-nav mr-auto mx-3">
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *appHasRole="'admin'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" [routerLink]="['/user']">
           <span data-feather="home"></span>
           Dashboard
@@ -39,8 +39,8 @@
     <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
-          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link" [routerLink]="['/user']">
+          <li *appHasRole="'admin'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" [routerLink]="['/admin']">
               <span data-feather="home"></span>
               Dashboard
             </a>
@@ -58,7 +58,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="logout()">
+            <a class="nav-link" href="#" (click)="logout()">
               <span data-feather="bar-chart-2"></span>
               Logout
             </a>

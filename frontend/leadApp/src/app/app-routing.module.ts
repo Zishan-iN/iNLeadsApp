@@ -15,10 +15,17 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'thankyou', component: ThankyouComponent},
+  
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] },
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+  },
   {
     path: 'user',
     canActivate: [AuthGuard],
-    data: { roles: ['admin', 'user'] },
+    data: { roles: ['user'] },
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {

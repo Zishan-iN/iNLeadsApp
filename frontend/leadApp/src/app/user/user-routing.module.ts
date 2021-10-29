@@ -8,8 +8,7 @@ const routes: Routes = [
    path: '',
    component: UserLandingComponent,
    children:[
-      {path: '', redirectTo: 'dashboard'},
-      {path: 'dashboard', component: UserDashboardComponent}
+      {path: '', redirectTo: '/leads/all-leads'}
    ]
   },
 ];

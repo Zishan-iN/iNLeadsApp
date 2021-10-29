@@ -30,7 +30,6 @@ router.post('/create', async(req, res)=>{
                 intrestedUniversity
             })
             if(saved){
-                // res.json({status: "success", message: 'Lead added successfully.'})
                 let testAccount = await nodemailer.createTestAccount();
                 let transporter = nodemailer.createTransport({
                     host: "smtp.ethereal.email",

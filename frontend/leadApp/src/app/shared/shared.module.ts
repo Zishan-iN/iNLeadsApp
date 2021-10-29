@@ -14,11 +14,13 @@ import {MatSortModule} from '@angular/material/sort';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
 import { MatFormFieldModule } from '@angular/material/form-field/';
+import { HasRoleDirective } from './directive/has-role.directive';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    AlertMessageComponent
+    AlertMessageComponent,
+    HasRoleDirective
   ],
   imports: [
     CommonModule,
@@ -50,7 +52,8 @@ import { MatFormFieldModule } from '@angular/material/form-field/';
     MatCheckboxModule,
     MatSortModule,
     DashboardComponent,
-    AlertMessageComponent
+    AlertMessageComponent,
+    HasRoleDirective
   ]
 })
 export class SharedModule { }

@@ -24,6 +24,7 @@ export class LeadsListComponent implements OnInit {
   faArrowLeft=faArrowLeft;
   fileName = 'Leads.xlsx';
   displayedColumns: string[] = ['select','createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
+  displayedColum: string[] = ['createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
   dataSource:any;
   selection:any;
   data:any;
