@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router()
 const sequelize = require('../config/db')
 const nodemailer = require('nodemailer');
+const auth = require('../middleware/auth')
 
 //Add Leads
-router.post('/create', async(req, res)=>{
+router.post('/create',auth, async(req, res)=>{
     const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body;
     const founLead = await sequelize.models.Lead.findOne({
         where: {
@@ -72,7 +73,7 @@ router.post('/create', async(req, res)=>{
 })
 
 //Get all leads.
-router.get('/all-leads', async(req, res)=>{
+router.get('/all-leads',auth, async(req, res)=>{
     try {
         const leads=await sequelize.models.Lead.findAll()
         if(leads){
@@ -93,7 +94,7 @@ router.get('/all-leads', async(req, res)=>{
 })
 
 //Get lead by lead id.
-router.get('/:id', async(req, res)=>{
+router.get('/:id',auth, async(req, res)=>{
     try {
         const id = req.params.id
         const lead = await sequelize.models.Lead.findOne({
@@ -119,7 +120,7 @@ router.get('/:id', async(req, res)=>{
 })
 
 //Delete lead by id.
-router.delete('/delete/:id', async(req, res)=>{
+router.delete('/delete/:id',auth, async(req, res)=>{
     try {
         const id = req.params.id
         const lead = await sequelize.models.Lead.destroy({
@@ -145,7 +146,7 @@ router.delete('/delete/:id', async(req, res)=>{
 })
 
 //Delete multiple leads at once.
-router.post('/delete-selected', async(req,res)=>{
+router.post('/delete-selected',auth, async(req,res)=>{
     try {
         const idArray = req.body
         const leadsDeleted = await sequelize.models.Lead.destroy({

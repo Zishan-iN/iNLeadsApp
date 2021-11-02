@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { tokenInterceptor } from './auth/tocken.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     HttpClientModule,
     SharedModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, tokenInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

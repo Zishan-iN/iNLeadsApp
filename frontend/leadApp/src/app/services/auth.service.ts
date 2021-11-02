@@ -18,7 +18,7 @@ export class AuthService {
   
   constructor(private http: HttpClient, private router: Router) { 
     this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser') || '{}')
+      JSON.parse(localStorage.getItem('currentUser')|| '{}')
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -31,7 +31,7 @@ export class AuthService {
     return this.http.post<User>(this.baseApiUrl + '/login', user).pipe(
       catchError(this.handleError),
       map((user:any) => {
-        if (user) {
+        if (user && user.token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
@@ -46,9 +46,17 @@ export class AuthService {
     )
   }
 
+  resetPassword(password: any, token: any): Observable<any> {
+    return this.http
+      .post<any>(this.baseApiUrl + '/reset-password/' + token, {
+        password: password,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   loggedIn() {
     const currentUser = this.currentUserValue;
-    if (currentUser) {
+    if (currentUser && currentUser.token) {
       return true;
     } else {
       return false;

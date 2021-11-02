@@ -6,7 +6,8 @@ export class User{
    public email!:string;
    public password!: string;
    public profileImage!: File;
-   public role!: Role
+   public role!: Role;
+   public token?: string;
    public createdAt!: Date;
    public updatedAt!: Date;
 }
