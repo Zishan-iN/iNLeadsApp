@@ -9,9 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DashboardComponent implements OnInit {
 
   navbarOpen = false;
+  toggleId: any;
+  collapseMenuLink=false
+  currentUser:any
+  changePasswordRoute!: string;
+  profileSettingRoute!: string;
   constructor(
     private authService: AuthService
-  ) { }
+  ) { 
+    this.currentUser = this.authService.currentUserValue;
+    this.setRoleBasedRoute(this.currentUser.role)
+  }
 
   ngOnInit(): void {
   }
@@ -22,6 +30,23 @@ export class DashboardComponent implements OnInit {
   
   logout(){
     this.authService.logout();
+  }
+
+  collapsebleMenu(event:any): void {
+    console.log('Id', event)
+    // this.toggleId = event.target.id;
+    console.log('Id', this.toggleId)
+    this.collapseMenuLink = !this.collapseMenuLink;
+  }
+
+  setRoleBasedRoute(role: any) {
+    if(role ==='admin'){
+      this.changePasswordRoute = '/admin/admin-change-password'
+      this.profileSettingRoute = '/admin/admin-profile'
+    }else if(role ==='user'){
+      this.changePasswordRoute = '/user/user-change-password'
+      this.profileSettingRoute = '/user/user-profile'
+    }
   }
 
 }

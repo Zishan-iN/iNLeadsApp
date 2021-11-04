@@ -1,0 +1,31 @@
+
+.mat-expansion-panel-header {
+    padding: 0px 24px 0px 16px;
+}
+.mat-expansion-panel {
+    background-color: #f8f9fa;
+}
+
+.mat-expansion-panel {
+    border-radius: 0 !important;
+}
+
+@media screen and (max-width:768px) {
+    .mat-list-item  {
+        color: #fff;
+    }
+    .mat-expansion-panel {
+        background-color: #673ab7;
+    }
+
+    .mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover {
+        background-color: #673ab7 !important;
+    }
+
+    .mat-expansion-indicator::after{
+        color: #fff !important;
+    }
+    .mat-expansion-panel-header-title{
+        color: #fff !important;
+    }
+}

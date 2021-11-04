@@ -54,6 +54,13 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  changePassword(data: any): Observable<any> {
+    return this.http.patch<any>(this.baseApiUrl + '/change-password', {
+      password: data.password,
+      oldpassword: data.oldpassword,
+    });
+  }
+
   loggedIn() {
     const currentUser = this.currentUserValue;
     if (currentUser && currentUser.token) {

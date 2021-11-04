@@ -10,17 +10,23 @@ import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 import {MatSortModule} from '@angular/material/sort';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
 import { MatFormFieldModule } from '@angular/material/form-field/';
 import { HasRoleDirective } from './directive/has-role.directive';
+import { ProfileComponent } from './account-settings/profile/profile.component';
+import { ChangePasswordComponent } from './account-settings/change-password/change-password.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     AlertMessageComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    ProfileComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +43,8 @@ import { HasRoleDirective } from './directive/has-role.directive';
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,
+    MatExpansionModule,
+    MatListModule
   ],
   exports:[
     FormsModule,
@@ -51,7 +59,11 @@ import { HasRoleDirective } from './directive/has-role.directive';
     MatTableModule,
     MatCheckboxModule,
     MatSortModule,
+    MatExpansionModule,
+    MatListModule,
     DashboardComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
     AlertMessageComponent,
     HasRoleDirective
   ]

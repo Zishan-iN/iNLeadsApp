@@ -53,10 +53,10 @@ router.post('/login', async(req, res)=>{
                 })
               })
         }
-    } catch (err) {
+    } catch (error) {
         res.status(500).json({
             status: "failure",
-            error: err.message
+            message: error.message
         });
     }
 })
@@ -87,7 +87,7 @@ router.post('/forgot-password', async(req, res)=>{
             if (err) {
                 res.status(400).json({
                         status: "failure",
-                        error: err.message
+                        message: error.message
                 })
             }else{
                 let transporter = nodemailer.createTransport({
@@ -119,7 +119,7 @@ router.post('/forgot-password', async(req, res)=>{
                     }
                     return res.status(500).json({
                         status: "failure",
-                        error: error.message
+                        message: error.message
                     })
                 })
                 // console.log('Runn')
@@ -136,12 +136,12 @@ router.post('/forgot-password', async(req, res)=>{
                 //     console.log(err)
                 //     console.dir(reply)
                 // })
-        }
+            }
         })
     } catch (error) {
         res.status(500).json({
             status: "failure",
-            error: error.message
+            message: error.message
         })
     }
 })
@@ -167,13 +167,55 @@ router.post('/reset-password/:token', async(req,res)=>{
         }else{
             res.status(400).json({
                 status: "failure",
-                error: err.message
+                message: error.message
             })
         }
     } catch (error) {
         res.status(400).json({
             status: "failure",
-            error: err.message
+            message: error.message
+        })
+    }
+})
+
+router.patch('/change-password',auth, async(req, res)=>{
+    const  {password, oldpassword} = req.body
+    try {
+        const currUser = await sequelize.models.User.findOne({
+            where:{
+                id: req.user.id
+            }
+        })
+    
+        const isMatch = await bcrypt.compare(oldpassword, currUser.password)
+        if(!isMatch){
+            return res.status(400).json({
+                status: "failure",
+                message: "Old password not matched."
+            });
+        }else{
+            const salt = await bcrypt.genSalt(10);
+            const newPassword = await bcrypt.hash(password, salt);
+            const foundUser = await sequelize.models.User.update({password: newPassword},{
+                where:{
+                    id: req.user.id
+                }
+            })
+            if(!foundUser){
+                return res.status(400).json({
+                    status: "failure",
+                    message: "Some error occured while changing password, please try later."
+                })
+            }
+            res.status(200).json({
+                status: "success",
+                message: "Password successfully changed."
+            });
+        }
+    } catch (error) {
+        res.status(400).json({
+            status: "failure",
+            message: error.message
         })
     }
 })
@@ -215,7 +257,7 @@ router.post('/create-user', async(req,res)=>{
     } catch (error) {
         res.status(500).json({
             status: "failure",
-            error: error.message
+            message: error.message
         })
     }
 })
