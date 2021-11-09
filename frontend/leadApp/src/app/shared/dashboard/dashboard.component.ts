@@ -14,10 +14,12 @@ export class DashboardComponent implements OnInit {
   currentUser:any
   changePasswordRoute!: string;
   profileSettingRoute!: string;
+  userName!: string
   constructor(
     private authService: AuthService
   ) { 
     this.currentUser = this.authService.currentUserValue;
+    this.userName = this.currentUser.name
     this.setRoleBasedRoute(this.currentUser.role)
   }
 

@@ -6,44 +6,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-    <!-- <ul class="navbar-nav mr-auto mx-3">
-      <li *appHasRole="'admin'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" [routerLink]="['/user']">
-          <span data-feather="home"></span>
-          Dashboard
-        </a>
-      </li>
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" [routerLink]="['/leads']">
-          <span data-feather="file"></span>
-          Leads
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-toggle show-caret" data-toggle="collapse" aria-expanded="false" id="accountSettingsToggleId" (click)="collapsebleMenu($event)">
-          Account Setting
-        </a>
-        <ul class="collapse" id="pageSubMenu" [ngClass]="{ show: collapseMenuLink && toggleId == 'accountSettingsToggleId' }">
-          <li>
-            <a [routerLink]="[changePasswordRoute]">vhvh</a>
-          </li>
-          <li>
-            <a href="">bmbb</a>
-          </li>
-          <li>
-            <a href="">bmbm</a>
-          </li>
-        </ul>>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="logout()">
-          <span data-feather="bar-chart-2"></span>
-          Logout
-        </a>
-      </li>
-    </ul> -->
     <mat-accordion class="app-nav-accordion">
       <mat-nav-list>
+        <a mat-list-item [routerLink]="[profileSettingRoute]"><i>Welcome</i> &nbsp;{{userName}}</a>
         <a mat-list-item *appHasRole="'admin'" [routerLink]="['/admin']">Dashboard</a>
         <a mat-list-item [routerLink]="['/leads']">Leads</a>
       </mat-nav-list>
@@ -66,32 +31,6 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
-        <!-- <ul class="nav flex-column">
-          <li *appHasRole="'admin'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link" [routerLink]="['/admin']">
-              <span data-feather="home"></span>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link" [routerLink]="['/leads']">
-              <span data-feather="file"></span>
-              Leads
-            </a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Account Setting
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" (click)="logout()">
-              <span data-feather="bar-chart-2"></span>
-              Logout
-            </a>
-          </li>
-        </ul> -->
         <mat-accordion class="app-nav-accordion">
           <mat-nav-list>
             <a mat-list-item *appHasRole="'admin'" [routerLink]="['/admin']">Dashboard</a>
