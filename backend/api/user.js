@@ -164,7 +164,13 @@ router.post('/reset-password/:token', async(req,res)=>{
     }
 })
 
-router.patch('/change-password',auth, async(req, res)=>{
+router.patch('/change-password',[auth, check('password', 'Please enter a password of 8 or more characters').isLength({min: 8, max:12}),
+check(
+    'oldpassword',
+    'Please enter old password of 8 or more characters'
+  ).isLength({
+    min: 8,
+  })], async(req, res)=>{
     const  {password, oldpassword} = req.body
     try {
         const currUser = await sequelize.models.User.findOne({
