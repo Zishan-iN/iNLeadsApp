@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
     });
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]]
+      confirmPassword: ['', [Validators.required]]
     },
     {
       // Used custom form validator name
