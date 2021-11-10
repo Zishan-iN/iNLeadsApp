@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertMessageService } from '../services/alert-message.service';
 import { AuthService } from '../services/auth.service';
 
@@ -15,7 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private alertService: AlertMessageService
+    private alertService: AlertMessageService,
+    private router:Router
   ) { 
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,7 +36,9 @@ export class ForgotPasswordComponent implements OnInit {
         if (res.status === 'success') {
           this.options.autoClose = true;
           this.alertService.success(res.message, this.options);
-          this.forgotPasswordForm.reset();
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 5000);
         }
       }, err=>{
         this.options.autoClose = true;

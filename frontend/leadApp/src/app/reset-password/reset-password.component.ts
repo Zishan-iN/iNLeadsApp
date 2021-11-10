@@ -21,6 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   token: any;
   showNewPassword=true;
   showConfirmPassword=true;
+  show: boolean = false;
   constructor(
     private authService: AuthService,
     private alertService: AlertMessageService,
@@ -78,6 +79,10 @@ export class ResetPasswordComponent implements OnInit {
         this.showConfirmPassword = false;
       }
     }
+  }
+
+  showStrengthmeter(){
+    this.show = true;
   }
 
 }

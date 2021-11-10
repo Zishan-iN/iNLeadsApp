@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field/';
 import { HasRoleDirective } from './directive/has-role.directive';
 import { ProfileComponent } from './account-settings/profile/profile.component';
 import { ChangePasswordComponent } from './account-settings/change-password/change-password.component';
+import { PasswordStrengthComponent } from './password-strength/password-strength.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ChangePasswordComponent } from './account-settings/change-password/chan
     HasRoleDirective,
     ProfileComponent,
     ChangePasswordComponent,
+    PasswordStrengthComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +67,7 @@ import { ChangePasswordComponent } from './account-settings/change-password/chan
     ProfileComponent,
     ChangePasswordComponent,
     AlertMessageComponent,
+    PasswordStrengthComponent,
     HasRoleDirective
   ]
 })

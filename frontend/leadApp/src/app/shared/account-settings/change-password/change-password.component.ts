@@ -18,6 +18,7 @@ export class ChangePasswordComponent implements OnInit {
   showNewPassword = true;
   showConfirmPassword = true;
   options = { autoClose: false, redirect: false, redirectLink: '' };
+  show: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -79,6 +80,10 @@ export class ChangePasswordComponent implements OnInit {
         this.showConfirmPassword = false;
       }
     }
+  }
+
+  showStrengthmeter(){
+    this.show = true;
   }
 
 }
