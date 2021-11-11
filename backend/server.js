@@ -1,20 +1,16 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const path = require('path')
 const sequelize = require('./config/db')
 const cors = require('cors')
 const app=express()
 
-//Load config.
-dotenv.config({path:'./config/config.env'})
 
-// const corsOptions = {origin: 'http://localhost:4200'}
+dotenv.config({path:'./config/config.env'})
 
 const allowedDomains  = ['http://127.0.0.1:4200','http://localhost:4200'];
 
 app.use(cors({
     origin: function (origin, callback) {
-      // bypass the requests with no origin (like curl requests, mobile apps, etc )
       if (!origin) return callback(null, true);
    
       if (allowedDomains.indexOf(origin) === -1) {
@@ -31,8 +27,8 @@ app.use(express.json())
 const connectDB = async()=>{
     try {
         await sequelize.authenticate();
-        //sequelize.sync({force: true});
-        sequelize.sync();
+        sequelize.sync({force: true});
+        // sequelize.sync();
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);

@@ -95,7 +95,6 @@ export class PasswordStrengthComponent implements OnInit {
         break  
       }
       this.barColor = color
-      console.log('BCAf', this.barColor)
     }
   }
 

@@ -35,9 +35,6 @@ export class DashboardComponent implements OnInit {
   }
 
   collapsebleMenu(event:any): void {
-    console.log('Id', event)
-    // this.toggleId = event.target.id;
-    console.log('Id', this.toggleId)
     this.collapseMenuLink = !this.collapseMenuLink;
   }
 

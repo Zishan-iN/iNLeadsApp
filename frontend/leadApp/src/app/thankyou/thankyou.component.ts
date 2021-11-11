@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Lead } from 'src/app/models/lead.model';
 import { LeadService } from 'src/app/services/lead.service';
 
@@ -10,9 +10,13 @@ import { LeadService } from 'src/app/services/lead.service';
 })
 export class ThankyouComponent implements OnInit {
   studentname!:string;
+  message!: string;
+  showSuccess = false;
+  showError = false;
   constructor(
     private route: ActivatedRoute,
-    private leadService: LeadService
+    private leadService: LeadService,
+    private router: Router
     ) { 
     this.route.queryParams.subscribe(params => {
       let firstName = params['FirstName'];
@@ -28,7 +32,11 @@ export class ThankyouComponent implements OnInit {
       lead.phone = phone
       lead.intrestedProgram =intrestedProgram
       lead.intrestedUniversity =intrestedUniversity
-      this.addLead(lead)
+      if(firstName && emailAddress && phone && intrestedProgram && intrestedUniversity){
+        this.addLead(lead)
+      }else{
+        window.location.href= 'https://inurture.co.in/'
+      }
     });
   }
 
@@ -37,10 +45,24 @@ export class ThankyouComponent implements OnInit {
 
   addLead(lead: Lead) {
     this.leadService.addLead(lead).subscribe(res=>{
-      console.log('Res', res)
-      // if(res.success){
-
-      // }
+      if(res.status = 'success'){
+        this.showSuccess = true
+        this.message = `Your form has been successfully submitted. We will get in touch with you shortly.`
+      }
+    },error=>{
+      if(error.error.error = 'Lead already exist'){
+        this.showError = true
+        this.message = `You have already submitted same query. Please enquire for other program or university.`
+        setTimeout(() => {
+          window.location.href= 'https://inurture.co.in/'
+        }, 5000);
+      }else{
+        this.showError =true
+        this.message =`Some unknown error occured. Please try again later.`
+        setTimeout(() => {
+          window.location.href= 'https://inurture.co.in/'
+        }, 5000);
+      }
     })
   }
 

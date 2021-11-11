@@ -29,18 +29,12 @@ tr:nth-child(even) {
   .mat-table .mat-header-cell{
     display: none;
   }
- 
-  /* mat-header-row{
-    
-  } */
 
   .mat-table .mat-row {
     border-bottom: 5px solid #ddd;
     display: block;
   }
   
-  /* .mat-table .mat-row:nth-child(even) {background: #CCC}
-  .mat-table .mat-row:nth-child(odd) {background: #FFF} */
  
   .mat-table .mat-cell {
     border-bottom: 1px solid #ddd;

@@ -4,7 +4,7 @@ body {
 }
 
 .navbar-dark{
-    background-color: #673ab7 !important;
+  background-color: #673ab7 !important;
 }
   
 .feather {
@@ -12,10 +12,6 @@ width: 16px;
 height: 16px;
 vertical-align: text-bottom;
 }
-
-/*
-* Sidebar
-*/
 
 .sidebar {
 position: relative;
@@ -40,7 +36,7 @@ height: calc(100vh - 48px);
 padding-top: .5rem;
 padding-right: 2px;
 overflow-x: hidden;
-overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+overflow-y: auto; 
 }
 
 @supports ((position: -webkit-sticky) or (position: sticky)) {
@@ -73,10 +69,6 @@ color: inherit;
 font-size: .75rem;
 text-transform: uppercase;
 }
-
-/*
-* Navbar
-*/
 
 .navbar-brand {
 padding-top: .75rem;
@@ -126,18 +118,17 @@ z-index: 2;
   color: #673ab7;
 }
 
-/*Login, Forgot Password Styling*/
-  .mat-form-field {
-    width: 100%;
-    /* min-width: 250px; */
-  }
+.mat-form-field {
+  width: 100%;
+  /* min-width: 250px; */
+}
 
-  mat-card-title,
-  mat-card-content {
-    display: flex;
-    justify-content: center;
-  }
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
 
-  button.block-btn{
-    width: 100%;
-  }
+button.block-btn{
+  width: 100%;
+}

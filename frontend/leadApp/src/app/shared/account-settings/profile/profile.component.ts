@@ -17,7 +17,6 @@ export class ProfileComponent implements OnInit {
     const imgFile: File = <File>event.target.files[0];
     const allowedFileSize: number = 300 * 1024;
     const supportedFormat = ['image/jpg', 'image/png', 'image/jpeg'];
-    console.log('Img', imgFile)
     if(imgFile.size>allowedFileSize){
       this.imgErrorMesg = 'Image should not greater than 300 KB.'
       this.imgInputSelector.nativeElement.value = '';

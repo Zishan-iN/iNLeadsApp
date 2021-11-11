@@ -8,7 +8,6 @@ const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
 let userId;
-//Login
 router.post('/login', async(req, res)=>{
     const {email, password} = req.body
     try {        
@@ -77,7 +76,6 @@ router.post('/forgot-password', async(req, res)=>{
             });
         }
         userId = user.id;
-        let testAccount = await nodemailer.createTestAccount();  //Remove this line for production
         const payload = {
             user: {
                 id: userId,
@@ -91,26 +89,26 @@ router.post('/forgot-password', async(req, res)=>{
                 })
             }else{
                 let transporter = nodemailer.createTransport({
-                    host: "smtp.ethereal.email",
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
+                    host: process.env.MAIL_HOST,
+                    port: process.env.MAIL_PORT,
+                    secure: false,
                     auth: {
-                        user: testAccount.user, // generated ethereal user
-                        pass: testAccount.pass, // generated ethereal password
+                        user: process.env.LEADMAILER_USER,
+                        pass: process.env.LEADMAILER_PASSWORD 
                     },
                 });
                 let mailOptions ={
-                    from: `iNurture Lead App <zishan@inurture.co.in>`,
+                    from: `iNurture Lead ${process.env.LEADMAILER_USER}`,
                     to: `${email}`,
-                    subject: 'Change Password Request!',
-                    html: `<h3>Dear ${user.name},\n</h3>
+                    subject: 'Password Reset!',
+                    html: `<p>Dear ${user.name},\n</p>
                     <h4>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n</h4>
                     <p>Please click on the link, or paste link address into your browser to complete the process:\n\n</p>
                     <p><a href="http://localhost:4200/reset-password?token=${token}">Reset Password</a> \n\n</p> 
-                    <p>If you did not request this, please ignore this email and your password will remain unchanged.\n<p>`
+                    <p>If you did not request this, please ignore this email and your password will remain unchanged.\n\n<p>
+                    <p>iNurture Team\n</p>`
                 }
                 transporter.sendMail(mailOptions, (error,info)=>{
-                    console.log('URL', nodemailer.getTestMessageUrl(info))
                     if(info){
                         res.status(201).json({
                             status: "success",
@@ -165,12 +163,13 @@ router.post('/reset-password/:token', async(req,res)=>{
 })
 
 router.patch('/change-password',[auth, check('password', 'Please enter a password of 8 or more characters').isLength({min: 8, max:12}),
-check(
-    'oldpassword',
-    'Please enter old password of 8 or more characters'
-  ).isLength({
-    min: 8,
-  })], async(req, res)=>{
+check( 'oldpassword', 'Please enter old password of 8 or more characters').isLength({min: 8, max:12})], async(req, res)=>{
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      res.status(400).json({
+        error: error.array(),
+      });
+    }
     const  {password, oldpassword} = req.body
     try {
         const currUser = await sequelize.models.User.findOne({
@@ -212,47 +211,45 @@ check(
     }
 })
 
-//Create user
-router.post('/create-user', async(req,res)=>{
-    const salt =  bcrypt.genSaltSync(10);
-    // const {name, email, password, profileImage, roleId} = req.body
-    const name = req.body.name
-    const password = bcrypt.hashSync(req.body.password, salt);
-    const email = req.body.email
-    const profileImage = req.body.profileImage
-    const roleId =req.body.roleId
-    try {
-        let user = await sequelize.models.User.findOne({
-            where:{
-                email: email
-            }
-        })
+// router.post('/create-user', async(req,res)=>{
+//     const salt =  bcrypt.genSaltSync(10);
+//     const name = req.body.name
+//     const password = bcrypt.hashSync(req.body.password, salt);
+//     const email = req.body.email
+//     const profileImage = req.body.profileImage
+//     const roleId =req.body.roleId
+//     try {
+//         let user = await sequelize.models.User.findOne({
+//             where:{
+//                 email: email
+//             }
+//         })
 
-        if(user){
-            return res.status(400).json({
-                status: "failure",
-                error: 'User already exist.'
-            });
-        }else{
-            const saved = await sequelize.models.User.create({
-                name, 
-                email, 
-                password, 
-                profileImage, 
-                roleId
-            })
-            if(saved){
-                res.json({status: "success", message: 'User added successfully.'})
-            }
-        }
+//         if(user){
+//             return res.status(400).json({
+//                 status: "failure",
+//                 error: 'User already exist.'
+//             });
+//         }else{
+//             const saved = await sequelize.models.User.create({
+//                 name, 
+//                 email, 
+//                 password, 
+//                 profileImage, 
+//                 roleId
+//             })
+//             if(saved){
+//                 res.json({status: "success", message: 'User added successfully.'})
+//             }
+//         }
         
-    } catch (error) {
-        res.status(500).json({
-            status: "failure",
-            message: error.message
-        })
-    }
-})
+//     } catch (error) {
+//         res.status(500).json({
+//             status: "failure",
+//             message: error.message
+//         })
+//     }
+// })
 
 module.exports = router
 

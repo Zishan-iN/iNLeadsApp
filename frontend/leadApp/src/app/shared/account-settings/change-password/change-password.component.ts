@@ -26,7 +26,7 @@ export class ChangePasswordComponent implements OnInit {
     private router:Router
   ) {
     this.changePasswordForm =this.formBuilder.group({
-      oldpassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
+      oldpassword: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
       confirmPassword: ['', [Validators.required]]
     },{ validator: ComparePassword("password", "confirmPassword") }
@@ -45,7 +45,6 @@ export class ChangePasswordComponent implements OnInit {
       data.password = this.changePasswordForm.get('password')?.value
       data.oldpassword = this.changePasswordForm.get('oldpassword')?.value
       this.authService.changePassword(data).subscribe(res=>{ 
-        console.log('Res', res)
         if(res.status==='success'){
           this.options.autoClose = true;
           this.options.redirect =true;
@@ -57,7 +56,6 @@ export class ChangePasswordComponent implements OnInit {
           }, 5000);
         }
       },error=>{
-          console.log('Er',error.error.message)
           this.options.autoClose = true;
           this.alertService.error(error.error.message, this.options)
       })

@@ -4,8 +4,7 @@ const sequelize = require('../config/db')
 const nodemailer = require('nodemailer');
 const auth = require('../middleware/auth')
 
-//Add Leads
-router.post('/create',auth, async(req, res)=>{
+router.post('/create', async(req, res)=>{
     const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body;
     const founLead = await sequelize.models.Lead.findOne({
         where: {
@@ -31,26 +30,25 @@ router.post('/create',auth, async(req, res)=>{
                 intrestedUniversity
             })
             if(saved){
-                let testAccount = await nodemailer.createTestAccount();
                 let transporter = nodemailer.createTransport({
-                    host: "smtp.ethereal.email",
-                    port: 587,
-                    secure: false, // true for 465, false for other ports
+                    host: process.env.MAIL_HOST,
+                    port: process.env.MAIL_PORT,
+                    secure: false,
                     auth: {
-                      user: testAccount.user, // generated ethereal user
-                      pass: testAccount.pass, // generated ethereal password
+                        user: process.env.LEADMAILER_USER,
+                        pass: process.env.LEADMAILER_PASSWORD 
                     },
                 });
                 let mailOptions ={
-                    from: `iNurture Education Solution <zishan@inurture.co.in>`,
+                    from: `iNurture Lead ${process.env.LEADMAILER_USER}`,
                     to: `${emailAddress}`,
                     subject: `Online Enquiry For ${intrestedProgram}!`,
-                    html: `<h3>Dear ${firstName},\n</h3>
-                    <h4>Thank you for submitting your query. We will get in touch
-                    with you shortly. \n\n</p> `
+                    html: `<p>Dear ${firstName},\n</p>
+                    <p>Thank you for submitting your query. We will get in touch
+                    with you shortly. \n\n</p> 
+                    <p>iNurture Team!\n</p>`
                 }
                 transporter.sendMail(mailOptions, (error,info)=>{
-                    console.log('URL', nodemailer.getTestMessageUrl(info))
                     if(info){
                         res.status(201).json({
                             status: "success",
@@ -72,7 +70,6 @@ router.post('/create',auth, async(req, res)=>{
     }
 })
 
-//Get all leads.
 router.get('/all-leads',auth, async(req, res)=>{
     try {
         const leads=await sequelize.models.Lead.findAll()
@@ -93,7 +90,6 @@ router.get('/all-leads',auth, async(req, res)=>{
     }
 })
 
-//Get lead by lead id.
 router.get('/:id',auth, async(req, res)=>{
     try {
         const id = req.params.id
@@ -119,7 +115,6 @@ router.get('/:id',auth, async(req, res)=>{
     }
 })
 
-//Delete lead by id.
 router.delete('/delete/:id',auth, async(req, res)=>{
     try {
         const id = req.params.id
@@ -145,7 +140,7 @@ router.delete('/delete/:id',auth, async(req, res)=>{
     }
 })
 
-//Delete multiple leads at once.
+
 router.post('/delete-selected',auth, async(req,res)=>{
     try {
         const idArray = req.body

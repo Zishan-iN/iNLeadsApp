@@ -5,8 +5,6 @@
      <div class="d-flex bd-highlight mx-3">
         <div class="p-2 flex-grow-1 bd-highlight">
             <input type="text" [(ngModel)]="search" placeholder="Filter" class="form-control w-25" (keyup)="applyFilter()">
-            <!-- <fa-icon [icon]="faTrash" class="field-icon"></fa-icon> -->
-              <!-- <i>X</i> -->
         </div>
         <div class="p-1 bd-highlight" *appHasRole="'admin'">
           <fa-icon [icon]="faTrash" class="lead-delete-icon my-3" (click)="removeSelectedRows()"
@@ -40,40 +38,31 @@
           <td mat-cell *matCellDef="let element">{{element.createdAt | date:'dd.MM.yy HH:mm'}}</td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="Time">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Time">Time</th>
-          <td mat-cell *matCellDef="let element">{{element.createdAt | date:'mediumTime'}}</td>
-        </ng-container> -->
-
-        <!-- Name Column -->
         <ng-container matColumnDef="firstName">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by firstName">Name</th>
           <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
         </ng-container>
     
-        <!-- Email Column -->
         <ng-container matColumnDef="emailAddress">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by emailAddress"> Email </th>
           <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
         </ng-container>
     
-        <!-- Phone Column -->
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by phone"> Phone </th>
           <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
         </ng-container>
     
-        <!-- Course Column -->
         <ng-container matColumnDef="intrestedProgram">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by intrestedProgram"> Interested Course </th>
           <td mat-cell *matCellDef="let element"> {{element.intrestedProgram}} </td>
         </ng-container>
 
-        <!-- University Column -->
         <ng-container matColumnDef="intrestedUniversity">
           <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by intrestedUniversity">Interested University </th>
           <td mat-cell *matCellDef="let element"> {{element.intrestedUniversity}} </td>
         </ng-container>
+
         <div *appHasRole="'user'">
           <tr mat-header-row *matHeaderRowDef="displayedColum"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColum;"></tr>
@@ -85,7 +74,6 @@
       </table>
     </div>
 
-    <!-- For Responsive -->
     <div class="d-block d-sm-none">
       <mat-table id="excel-table" [dataSource]="dataSource" matSort matSort matSortStart="desc" (matSortChange)="announceSortChange($event)">
         <ng-container *appHasRole="'admin'" matColumnDef="select">
@@ -106,25 +94,21 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date">Date</mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="Date">{{element.createdAt | date:'dd.MM.yy HH:mm'}}</mat-cell>
         </ng-container>
-        <!-- ID Column -->
         <ng-container matColumnDef="firstName">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="Name"> {{element.firstName}}  </mat-cell>
         </ng-container>
     
-        <!-- Progress Column -->
         <ng-container matColumnDef="emailAddress">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="Email"> {{element.emailAddress}}% </mat-cell>
         </ng-container>
     
-        <!-- Name Column -->
         <ng-container matColumnDef="phone">
           <mat-header-cell *matHeaderCellDef mat-sort-header> phone </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="phone"> {{element.phone}} </mat-cell>
         </ng-container>
     
-        <!-- Color Column -->
         <ng-container matColumnDef="intrestedProgram">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Interested Program </mat-header-cell>
           <mat-cell *matCellDef="let element" data-label="Interested Program"> {{element.intrestedProgram}} </mat-cell>
@@ -147,7 +131,6 @@
         </div>  
       </mat-table>
     </div>
-  
     <mat-paginator [pageSizeOptions]="[5, 25,50, 100]"
                    showFirstLastButtons 
                    aria-label="Select page of periodic elements">

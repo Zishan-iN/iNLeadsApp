@@ -36,7 +36,6 @@ export class ResetPasswordComponent implements OnInit {
       confirmPassword: ['', [Validators.required]]
     },
     {
-      // Used custom form validator name
       validator: ComparePassword("password", "confirmPassword")
     })
    }
