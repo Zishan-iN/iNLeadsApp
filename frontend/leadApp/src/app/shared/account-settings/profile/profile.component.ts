@@ -7,6 +7,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
   imgErrorMesg!: string;
+  avtarImg = 'assets/images/avatar.jpg'
   @ViewChild('imgInput') imgInputSelector!: ElementRef;
   constructor() { }
 

@@ -211,45 +211,92 @@ check( 'oldpassword', 'Please enter old password of 8 or more characters').isLen
     }
 })
 
-// router.post('/create-user', async(req,res)=>{
-//     const salt =  bcrypt.genSaltSync(10);
-//     const name = req.body.name
-//     const password = bcrypt.hashSync(req.body.password, salt);
-//     const email = req.body.email
-//     const profileImage = req.body.profileImage
-//     const roleId =req.body.roleId
-//     try {
-//         let user = await sequelize.models.User.findOne({
-//             where:{
-//                 email: email
-//             }
-//         })
+router.post('/create-user',auth, async(req,res)=>{
+    const salt =  bcrypt.genSaltSync(10);
+    const name = req.body.name
+    const password = bcrypt.hashSync(req.body.password, salt);
+    const email = req.body.email
+    const profileImage = req.body.profileImage
+    const roleId =req.body.roleId
+    try {
+        let user = await sequelize.models.User.findOne({
+            where:{
+                email: email
+            }
+        })
 
-//         if(user){
-//             return res.status(400).json({
-//                 status: "failure",
-//                 error: 'User already exist.'
-//             });
-//         }else{
-//             const saved = await sequelize.models.User.create({
-//                 name, 
-//                 email, 
-//                 password, 
-//                 profileImage, 
-//                 roleId
-//             })
-//             if(saved){
-//                 res.json({status: "success", message: 'User added successfully.'})
-//             }
-//         }
+        if(user){
+            return res.status(400).json({
+                status: "failure",
+                error: 'User already exist.'
+            });
+        }else{
+            const saved = await sequelize.models.User.create({
+                name, 
+                email, 
+                password, 
+                profileImage, 
+                roleId
+            })
+            if(saved){
+                res.json({status: "success", message: 'User added successfully.'})
+            }
+        }
         
-//     } catch (error) {
-//         res.status(500).json({
-//             status: "failure",
-//             message: error.message
-//         })
-//     }
-// })
+    } catch (error) {
+        res.status(500).json({
+            status: "failure",
+            message: error.message
+        })
+    }
+})
+router.post('/create-sup-user', async(req,res)=>{
+    const salt =  bcrypt.genSaltSync(10);
+    const name = req.body.name
+    const password = bcrypt.hashSync(req.body.password, salt);
+    const email = req.body.email
+    const profileImage = req.body.profileImage
+    const roleId =req.body.roleId
+    try {
+        let user = await sequelize.models.User.findOne({
+            where:{
+                email: email
+            }
+        })
+        if(user){
+            return res.status(400).json({
+                status: "failure",
+                error: 'Sup admin already exist.'
+            });
+        }else{
+            let userName = name.toLowerCase();
+            if(userName === 'zishan'){
+                const saved = await sequelize.models.User.create({
+                    name, 
+                    email, 
+                    password, 
+                    profileImage, 
+                    roleId
+                })
+                if(saved){
+                    res.json({status: "success", message: 'admin added successfully.'})
+                }
+            }else{
+                return res.status(401).json({
+                    status: "failure",
+                    error: 'Access Denied.'
+                });
+            }
+
+        }
+        
+    } catch (error) {
+        res.status(500).json({
+            status: "failure",
+            message: error.message
+        })
+    }
+})
 
 module.exports = router
 

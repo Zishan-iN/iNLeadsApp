@@ -8,13 +8,14 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
+  inLogo = 'assets/images/iNLogo.png'
   navbarOpen = false;
   toggleId: any;
   collapseMenuLink=false
   currentUser:any
   changePasswordRoute!: string;
   profileSettingRoute!: string;
-  userName!: string
+  userName!: string;
   constructor(
     private authService: AuthService
   ) { 

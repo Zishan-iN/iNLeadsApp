@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
+  underConstructionImg ='assets/images/under-construction.jpg'
   constructor() { }
 
   ngOnInit(): void {

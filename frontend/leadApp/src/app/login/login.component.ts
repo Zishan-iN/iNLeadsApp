@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   faEye = faEye;
   hidePassword: boolean = true;
   options = { autoClose: true, redirect: false, redirectLink: '' };
+  loginImg = 'assets/images/login-image.png'
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
