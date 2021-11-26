@@ -46,7 +46,7 @@ router.get('/all-role', async(req, res)=>{
         if(roles){
             res.json(roles)
         }else{
-            res.status(403).json({
+            res.status(404).json({
                 status: "failure",
                 message: "Data not found."
             })

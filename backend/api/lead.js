@@ -57,7 +57,7 @@ router.post('/create', async(req, res)=>{
                     }
                     return res.status(400).json({
                         status: "failure",
-                        error: error.message
+                        error: 'Email Config Error'
                     })
                 })
             }
@@ -76,7 +76,7 @@ router.get('/all-leads',auth, async(req, res)=>{
         if(leads){
             res.json(leads)
         }else{
-            res.status(403).json({
+            res.status(404).json({
                 status: "failure",
                 message: "Data not found."
             })
@@ -101,7 +101,7 @@ router.get('/:id',auth, async(req, res)=>{
         if(lead){
             res.json(lead)
         }else{
-            res.status(403).json({
+            res.status(404).json({
                 status: "failure",
                 message: "Lead not found."
             })
@@ -126,7 +126,7 @@ router.delete('/delete/:id',auth, async(req, res)=>{
         if(!!lead){
             res.json({status: "success", message: 'Lead deleted successfully.'})
         }else{
-            res.status(403).json({
+            res.status(404).json({
                 status: "failure",
                 message: "Lead not exist."
             })

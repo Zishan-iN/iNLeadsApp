@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { catchError } from 'rxjs/operators';
 
@@ -27,11 +27,11 @@ export class TockenInterceptor implements HttpInterceptor {
         }
       })
     }
-    return next.handle(request).pipe(catchError(err => {
-      if([401,403].indexOf(err.status)!== -1){
+    return next.handle(request).pipe(catchError(error => {
+      if([401,403].indexOf(error.status)!== -1){
         this.authService.logout()
       }
-      return Observable.throw(err);
+      return throwError(error);
     }))
   }
 }

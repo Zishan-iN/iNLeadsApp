@@ -51,18 +51,21 @@ export class ThankyouComponent implements OnInit {
         this.message = `Your form has been successfully submitted. We will get in touch with you shortly.`
       }
     },error=>{
-      if(error.error.error = 'Lead already exist'){
+      if(error.error.error === 'Lead already exist.'){
         this.showError = true
         this.message = `You have already submitted same query. Please enquire for other program or university.`
-        // setTimeout(() => {
-        //   window.location.href= 'https://inurture.co.in/'
-        // }, 5000);
+        setTimeout(() => {
+          window.location.href= 'https://inurture.co.in/'
+        }, 5000);
+      }else if(error.error.error === 'Email Config Error'){
+        this.showError = true
+        this.message =`Error occured while sending you email. Don't worry we have captured your query, we will get in touch with you shortly.`
+        setTimeout(() => {
+          window.location.href= 'https://inurture.co.in/'
+        }, 5000);
       }else{
-        this.showError =true
-        this.message =`Some unknown error occured. Please try again later.`
-        // setTimeout(() => {
-        //   window.location.href= 'https://inurture.co.in/'
-        // }, 5000);
+        this.showError = true
+        this.message =`Some unknown error occured.`
       }
     })
   }
