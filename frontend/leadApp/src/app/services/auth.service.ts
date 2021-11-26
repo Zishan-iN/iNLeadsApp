@@ -61,6 +61,18 @@ export class AuthService {
     });
   }
 
+  getLoggedInUserProfile() {
+    return this.http.get<User>(this.baseApiUrl + '/user-profile');
+  }
+
+  changeUserProfilePhoto(formdata:FormData):Observable<any>{
+    return this.http.patch<any>(`${this.baseApiUrl}/change-profile-photo`, formdata)
+  }
+
+  deleteUserPhoto():Observable<any>{
+    return this.http.delete<any>(`${this.baseApiUrl}/delete-photo`)
+  }
+
   loggedIn() {
     const currentUser = this.currentUserValue;
     if (currentUser && currentUser.token) {

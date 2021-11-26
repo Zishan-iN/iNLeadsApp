@@ -3,11 +3,11 @@ const dotenv = require('dotenv')
 const sequelize = require('./config/db')
 const cors = require('cors')
 const app=express()
-
-
+const path = require('path');
 dotenv.config({path:'./config/config.env'})
 
-const allowedDomains  = ['https://inurture.co.in'];
+
+const allowedDomains  = ['http://localhost:4200','https://inurture.co.in'];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -19,7 +19,10 @@ app.use(cors({
       }
       return callback(null, true);
     }
-  }));
+}));
+
+app.use(express.static(__dirname + '/public'));
+app.use('/uploads', express.static('uploads'));
 
 app.use(express.json())
 
@@ -39,7 +42,6 @@ connectDB()
 
 const PORT = process.env.PORT || 3000
 
-//Sample get request.
 app.get('/', (req, res)=>{
     res.send(`Server is running at port: ${PORT}`)
 })

@@ -9,6 +9,7 @@ import { LeadService } from 'src/app/services/lead.service';
   styleUrls: ['./thankyou.component.css']
 })
 export class ThankyouComponent implements OnInit {
+  thankyouImg='assets/images/thankyou.jpg'
   studentname!:string;
   message!: string;
   showSuccess = false;
@@ -53,15 +54,15 @@ export class ThankyouComponent implements OnInit {
       if(error.error.error = 'Lead already exist'){
         this.showError = true
         this.message = `You have already submitted same query. Please enquire for other program or university.`
-        setTimeout(() => {
-          window.location.href= 'https://inurture.co.in/'
-        }, 5000);
+        // setTimeout(() => {
+        //   window.location.href= 'https://inurture.co.in/'
+        // }, 5000);
       }else{
         this.showError =true
         this.message =`Some unknown error occured. Please try again later.`
-        setTimeout(() => {
-          window.location.href= 'https://inurture.co.in/'
-        }, 5000);
+        // setTimeout(() => {
+        //   window.location.href= 'https://inurture.co.in/'
+        // }, 5000);
       }
     })
   }

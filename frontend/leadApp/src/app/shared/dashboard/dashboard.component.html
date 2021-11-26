@@ -2,13 +2,18 @@
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3 text-center">
       <img [src]="[inLogo]" alt="iNurture Logo" class="w-50">
   </a>
+  <div class="navbar-right d-none d-sm-block mx-5 p-1 image-container">
+    <img *ngIf="currentUser?.profileImage==null" class="img-fluid border border-white border-3 rounded-circle" [src]="avtarImg"
+          alt="Profile photo of {{currentUser?.name}}">
+    <img *ngIf="currentUser?.profileImage!=null" [src]="thumbnail" alt="Photo of {{currentUser?.name}}" class="img-fluid border border-white border-3 rounded-circle">
+  </div>
   <button (click)="toggleNavbar()" class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
     <mat-accordion class="app-nav-accordion">
       <mat-nav-list>
-        <a mat-list-item [routerLink]="[profileSettingRoute]"><i>Welcome</i> &nbsp;{{userName}}</a>
+        <a mat-list-item [routerLink]="[profileSettingRoute]">Welcome &nbsp;{{userName}}</a>
         <a mat-list-item *appHasRole="'admin'" [routerLink]="['/admin']">Dashboard</a>
         <a mat-list-item [routerLink]="['/leads']">Leads</a>
       </mat-nav-list>
@@ -33,6 +38,7 @@
       <div class="sidebar-sticky pt-3">
         <mat-accordion class="app-nav-accordion">
           <mat-nav-list>
+            <a mat-list-item [routerLink]="[profileSettingRoute]">Welcome &nbsp;{{userName}}</a>
             <a mat-list-item *appHasRole="'admin'" [routerLink]="['/admin']">Dashboard</a>
             <a mat-list-item [routerLink]="['/leads']">Leads</a>
           </mat-nav-list>

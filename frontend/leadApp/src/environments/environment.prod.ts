@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  API_Url: 'http://localhost:3000/api'
+  API_Url: 'https://leadapp.inurture.co.in/api',
+  IMG_Url: 'https://leadapp.inurture.co.in/',
 };

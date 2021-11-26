@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AlertMessageService } from 'src/app/services/alert-message.service';
 
 @Component({
   selector: 'app-leads-list',
@@ -32,10 +33,15 @@ export class LeadsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lead:any=[];
   search!: string;
-  responsive=true
+  responsive=true;
+  options = { autoClose: true, redirect: false, redirectLink: '' };
+  showWarning:boolean = false;
+  warningMesg!: string;
+  selectionLength: any;
   constructor(
     private leadService: LeadService,
-    private _liveAnnouncer: LiveAnnouncer
+    private _liveAnnouncer: LiveAnnouncer,
+    private alertService: AlertMessageService,
   ) { }
   
   ngOnInit(): void {
@@ -53,13 +59,37 @@ export class LeadsListComponent implements OnInit {
   }
 
   removeSelectedRows(){
+    this.showWarning =true
+    this.selectionLength = this.selection.selected.length
+    if(this.selection.selected.length>0){
+      this.warningMesg = 'Are you sure you want to delete leads? This action cannot be undone.'
+    }else{
+      this.warningMesg = 'Please select lead to delete.'
+      setTimeout(() => {
+        this.showWarning = false
+      }, 3000);
+    }
+  }
+
+  confirmLeadDeletion(){
     let idArray:any[]=[]
     this.selection.selected.forEach((item:any) => {
       idArray.push(item.id)
-      this.leadService.deleteSelectedLeads(idArray).subscribe(res=>{
-        this.getAllLeads()
-      })
     });
+    this.leadService.deleteSelectedLeads(idArray).subscribe(res =>{
+      if(res.status ='success'){
+        this.showWarning = false
+        this.alertService.success('Selected lead are deleted successfully', this.options)
+      }
+      this.getAllLeads()
+    },error=>{
+      this.alertService.error('Unknown error occured.Please try again later.', this.options)
+    })
+    
+  }
+
+  cancelDeletion(){
+    this.showWarning = false;
   }
 
   isAllSelected() {
@@ -77,7 +107,6 @@ export class LeadsListComponent implements OnInit {
 
 
   applyFilter(){
-    console.log(this.search)
     this.dataSource.filter = this.search ? this.search.trim().toLowerCase() : '';
   }
 
@@ -90,7 +119,6 @@ export class LeadsListComponent implements OnInit {
   }
 
   announceSortChange(sortState: Sort) {
-    console.log('sortState', sortState)
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {

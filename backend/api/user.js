@@ -6,6 +6,32 @@ const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads');
+    },
+    filename: function (req, file, cb) {
+      cb(null, new Date().getTime() + file.originalname);
+    },
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+};
+  
+const upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 300 * 1024,
+    },
+    fileFilter: fileFilter,
+});
 
 let userId;
 router.post('/login', async(req, res)=>{
@@ -45,7 +71,6 @@ router.post('/login', async(req, res)=>{
                 if (err) throw err;
                 res.status(200).json({
                     name: foundUser.name,
-                    email: foundUser.email,
                     profileImage: foundUser.profileImage,
                     role: foundUser.Role.roleName,
                     token: token 
@@ -59,7 +84,6 @@ router.post('/login', async(req, res)=>{
         });
     }
 })
-
 
 router.post('/forgot-password', async(req, res)=>{
     const {email} = req.body.email
@@ -88,15 +112,20 @@ router.post('/forgot-password', async(req, res)=>{
                         message: error.message
                 })
             }else{
-                let transporter = nodemailer.createTransport({
+                
+                let smtpconfig = {
                     host: process.env.MAIL_HOST,
                     port: process.env.MAIL_PORT,
-                    secure: false,
+                    secure: true,
                     auth: {
                         user: process.env.LEADMAILER_USER,
                         pass: process.env.LEADMAILER_PASSWORD 
                     },
-                });
+                    ignoreTLS: true 
+                };
+
+                let transporter = nodemailer.createTransport(smtpconfig)
+
                 let mailOptions ={
                     from: `iNurture Lead ${process.env.LEADMAILER_USER}`,
                     to: `${email}`,
@@ -117,7 +146,7 @@ router.post('/forgot-password', async(req, res)=>{
                     }
                     return res.status(500).json({
                         status: "failure",
-                        message: error.message
+                        message: 'Unknown Error occured.'
                     })
                 })
             }
@@ -250,6 +279,39 @@ router.post('/create-user',auth, async(req,res)=>{
         })
     }
 })
+
+router.patch('/change-profile-photo', auth, upload.single('profileImg'),async(req, res)=>{
+    try {
+        const filePath = req.file.path
+        const currUser = await sequelize.models.User.findOne({
+            where:{
+                id: req.user.id
+            }
+        })
+        if(currUser){
+            const foundUser = await sequelize.models.User.update({profileImage: filePath},{
+                where:{
+                    id: req.user.id
+                }
+            })
+            if(!foundUser){
+                return res.status(400).json({
+                    status: "failure",
+                    message: "Some error occured while changing password, please try later."
+                })
+            } 
+            res.status(200).json({
+                profileImage: !!currUser.profileImage?currUser.profileImage:null, 
+                status: "success",
+                message: "Photo successfully changed."
+            });
+        }
+
+    } catch (error) {
+        
+    }
+})
+
 router.post('/create-sup-user', async(req,res)=>{
     const salt =  bcrypt.genSaltSync(10);
     const name = req.body.name
@@ -295,6 +357,32 @@ router.post('/create-sup-user', async(req,res)=>{
             status: "failure",
             message: error.message
         })
+    }
+})
+
+router.get('/user-profile', auth, async(req,res)=>{
+    try {
+        const currUser = await sequelize.models.User.findOne({
+            where:{
+                id: req.user.id
+            }
+        })
+        if(!currUser){
+            return res.status(404).json({
+                status: "failure",
+                error: 'User not found.'
+            });
+        }
+        return res.status(200).json({
+            name: currUser.name,
+            profileImage: !!currUser.profileImage? currUser.profileImage:null,
+            role: currUser.roleName,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: "failure",
+            error: error.message
+        });
     }
 })
 

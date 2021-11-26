@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  inLogo = 'assets/images/iNLogo.png'
+  inLogo = 'assets/images/iNBrandLogo.png'
+  avtarImg = 'assets/images/avatar.jpg'
   navbarOpen = false;
   toggleId: any;
   collapseMenuLink=false
@@ -16,8 +18,11 @@ export class DashboardComponent implements OnInit {
   changePasswordRoute!: string;
   profileSettingRoute!: string;
   userName!: string;
+  thumbnail: any;
+  imgUrl = environment.IMG_Url;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
   ) { 
     this.currentUser = this.authService.currentUserValue;
     this.userName = this.currentUser.name
@@ -25,6 +30,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUserProfile()
+  }
+
+  getUserProfile() {
+     this.authService.getLoggedInUserProfile().subscribe(res=>{
+      this.currentUser = res
+      this.showImage(this.currentUser.profileImage)
+    })
+  }
+
+  showImage(profileImage: any) {
+    const photo = this.sanitizer.bypassSecurityTrustUrl(this.imgUrl + profileImage);
+    this.thumbnail = photo;
   }
 
   toggleNavbar() {

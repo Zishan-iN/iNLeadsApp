@@ -33,11 +33,11 @@ router.post('/create', async(req, res)=>{
                 let transporter = nodemailer.createTransport({
                     host: process.env.MAIL_HOST,
                     port: process.env.MAIL_PORT,
-                    secure: false,
+                    secure: true,
                     auth: {
                         user: process.env.LEADMAILER_USER,
                         pass: process.env.LEADMAILER_PASSWORD 
-                    },
+                    }
                 });
                 let mailOptions ={
                     from: `iNurture Lead ${process.env.LEADMAILER_USER}`,
