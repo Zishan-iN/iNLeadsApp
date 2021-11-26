@@ -62,7 +62,13 @@ export class LeadsListComponent implements OnInit {
     this.showWarning =true
     this.selectionLength = this.selection.selected.length
     if(this.selection.selected.length>0){
-      this.warningMesg = 'Are you sure you want to delete leads? This action cannot be undone.'
+      if(this.selection.selected.length===1){
+        this.warningMesg = 'Are you sure you want to delete this lead? This action cannot be undone.'
+      }else if(this.selection.selected.length > 1 && this.selection.selected.length < this.dataSource?.data?.length){
+        this.warningMesg = `Are you sure you want to delete these ${this.selection.selected.length} leads? This action cannot be undone.`
+      }else{
+        this.warningMesg = `Are you sure you want to delete all ${this.dataSource?.data?.length} leads? This action cannot be undone.`
+      }
     }else{
       this.warningMesg = 'Please select lead to delete.'
       setTimeout(() => {

@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TockenInterceptor implements HttpInterceptor {
@@ -26,7 +27,12 @@ export class TockenInterceptor implements HttpInterceptor {
         }
       })
     }
-    return next.handle(request);
+    return next.handle(request).pipe(catchError(err => {
+      if([401,403].indexOf(err.status)!== -1){
+        this.authService.logout()
+      }
+      return Observable.throw(err);
+    }))
   }
 }
 

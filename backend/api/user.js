@@ -94,7 +94,7 @@ router.post('/forgot-password', async(req, res)=>{
             }
         })
         if (!user) {
-            return res.status(403).json({
+            return res.status(404).json({
               status: "failure",
               message: 'User not registred.'
             });
