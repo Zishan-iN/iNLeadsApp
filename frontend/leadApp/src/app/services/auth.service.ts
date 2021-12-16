@@ -89,7 +89,6 @@ export class AuthService {
   }
 
   private handleError(errorRes: HttpErrorResponse) {
-    console.log('errorRes', errorRes)
     let errorMessage = '';
     const err: any = errorRes.error.message;
     switch (err) {

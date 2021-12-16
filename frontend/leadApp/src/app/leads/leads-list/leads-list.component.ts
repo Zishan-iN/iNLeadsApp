@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { faArrowLeft, faDownload, faPaperPlane, faPen, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { faArrowLeft, faDownload, faFilter, faPaperPlane, faPen, faPlus, faSearch, faTrash, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { Lead } from 'src/app/models/lead.model';
 import { LeadService } from 'src/app/services/lead.service';
 import * as XLSX from 'xlsx';
@@ -23,15 +23,26 @@ export class LeadsListComponent implements OnInit {
   faTrash = faTrash;
   faPaperPlane=faPaperPlane;
   faArrowLeft=faArrowLeft;
+  faUndo = faUndo;
+  faFilter = faFilter
   fileName = 'Leads.xlsx';
-  displayedColumns: string[] = ['select','createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
-  displayedColum: string[] = ['createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity'];
+  displayedColumns: string[] = ['select','createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity','userConsent'];
+  displayedColum: string[] = ['createdAt','firstName', 'emailAddress', 'phone', 'intrestedProgram', 'intrestedUniversity', 'userConsent'];
   dataSource:any;
   selection:any;
   data:any;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  lead:any=[];
+  private paginator!: MatPaginator;
+  private sort!: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
   search!: string;
   responsive=true;
   options = { autoClose: true, redirect: false, redirectLink: '' };
@@ -45,7 +56,7 @@ export class LeadsListComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    this.getAllLeads()
+    this.getAllLeads();
   }
 
   getAllLeads() {
@@ -53,9 +64,15 @@ export class LeadsListComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Lead>(res)
       this.selection = new SelectionModel<Lead>(true, []);
       this.data =Object.assign(res);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      this.setDataSourceAttributes()
     })
+  }
+
+  setDataSourceAttributes() {
+    if(this.dataSource){
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   removeSelectedRows(){
@@ -116,12 +133,33 @@ export class LeadsListComponent implements OnInit {
     this.dataSource.filter = this.search ? this.search.trim().toLowerCase() : '';
   }
 
-  exportexcel() {
-    let element = document.getElementById('excel-table');
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, this.fileName);
+  filterList(data:string){
+    this.leadService.getAllLeadsAgreeToCall(data).subscribe(res=>{
+      this.dataSource = new MatTableDataSource<Lead>(res)
+      this.selection = new SelectionModel<Lead>(true, []);
+      this.data =Object.assign(res);
+      this.setDataSourceAttributes()
+    })
+    
+  }
+
+  exportexcel(fileFormat: string) {
+    let element = document.getElementById('data-table');
+    
+    if(fileFormat=='xlsx'){
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+      ws['!cols'] = [];
+      ws['!cols'][0] = {hidden: true}
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, this.fileName);
+    }else{
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws);
+      XLSX.writeFile(wb, 'Leads.csv', {bookType:"csv"});
+    }
+    
   }
 
   announceSortChange(sortState: Sort) {
@@ -130,6 +168,11 @@ export class LeadsListComponent implements OnInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  refreshLeads(){
+    this.getAllLeads()
+    this.alertService.success('List updated.', this.options)
   }
 
 }

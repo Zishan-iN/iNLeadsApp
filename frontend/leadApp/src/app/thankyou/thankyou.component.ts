@@ -17,7 +17,6 @@ export class ThankyouComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private leadService: LeadService,
-    private router: Router
     ) { 
     this.route.queryParams.subscribe(params => {
       let firstName = params['FirstName'];
@@ -25,14 +24,15 @@ export class ThankyouComponent implements OnInit {
       let phone = params['Phone'];
       let intrestedProgram = params['mx_Interested_Programs'];
       let intrestedUniversity = params['mx_Interested_University'];
-
-      this.studentname =firstName
+      let userConsent = params['mx_User_Consent']
+      this.studentname = firstName
       let lead =new Lead()
       lead.firstName = firstName
       lead.emailAddress = emailAddress
       lead.phone = phone
       lead.intrestedProgram =intrestedProgram
       lead.intrestedUniversity =intrestedUniversity
+      lead.userConsent = userConsent
       if(firstName && emailAddress && phone && intrestedProgram && intrestedUniversity){
         this.addLead(lead)
       }else{
@@ -46,9 +46,9 @@ export class ThankyouComponent implements OnInit {
 
   addLead(lead: Lead) {
     this.leadService.addLead(lead).subscribe(res=>{
-      if(res.status = 'success'){
+      if(res.status === 'success'){
         this.showSuccess = true
-        this.message = `Your form has been successfully submitted. We will get in touch with you shortly.`
+        this.message = `Your form has been submitted successfully and email notification has been sent to your inbox.`
       }
     },error=>{
       if(error.error.error === 'Lead already exist.'){

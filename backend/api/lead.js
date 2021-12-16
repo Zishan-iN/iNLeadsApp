@@ -5,14 +5,15 @@ const nodemailer = require('nodemailer');
 const auth = require('../middleware/auth')
 
 router.post('/create', async(req, res)=>{
-    const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity} = req.body;
+    const {firstName, emailAddress, phone, intrestedProgram, intrestedUniversity, userConsent} = req.body;
     const founLead = await sequelize.models.Lead.findOne({
         where: {
             firstName: firstName,
             emailAddress: emailAddress,
             phone: phone,
             intrestedProgram: intrestedProgram,
-            intrestedUniversity:intrestedUniversity
+            intrestedUniversity:intrestedUniversity,
+            userConsent:userConsent
         }
     })
     if(founLead){
@@ -27,7 +28,8 @@ router.post('/create', async(req, res)=>{
                 emailAddress,
                 phone,
                 intrestedProgram,
-                intrestedUniversity
+                intrestedUniversity,
+                userConsent
             })
             if(saved){
                 let transporter = nodemailer.createTransport({
@@ -37,16 +39,17 @@ router.post('/create', async(req, res)=>{
                     auth: {
                         user: process.env.LEADMAILER_USER,
                         pass: process.env.LEADMAILER_PASSWORD 
-                    }
+                    },
+                    // ignoreTLS: true
                 });
                 let mailOptions ={
                     from: `iNurture Lead ${process.env.LEADMAILER_USER}`,
                     to: `${emailAddress}`,
                     subject: `Online Enquiry For ${intrestedProgram}!`,
-                    html: `<p>Dear ${firstName},\n</p>
-                    <p>Thank you for submitting your query. We will get in touch
-                    with you shortly. \n\n</p> 
-                    <p>iNurture Team!\n</p>`
+                    html: `<p>Hi ${firstName},\n\n</p>
+                    <p>Thank you for expressing interest in ${intrestedUniversity} ${intrestedProgram}.<br>Our career counsellor will soon get in touch with you.
+                    <br><br>Nearly any path you follow is bound to lead to something greater. Now that you have made your first move towards your career path, you are sure to explore better opportunities with our new-age programs and reach greater success in your career.\n\n</p>
+                    <p>Best Regards,<br>iNurture Education Solutions</p>`
                 }
                 transporter.sendMail(mailOptions, (error,info)=>{
                     if(info){
@@ -72,7 +75,39 @@ router.post('/create', async(req, res)=>{
 
 router.get('/all-leads',auth, async(req, res)=>{
     try {
-        const leads=await sequelize.models.Lead.findAll()
+        const leads=await sequelize.models.Lead.findAll(
+            {
+                order: [['updatedAt', 'DESC']],
+                // offset:1,
+                // limit: 10
+            }
+        )
+        if(leads){
+            res.json(leads)
+        }else{
+            res.status(404).json({
+                status: "failure",
+                message: "Data not found."
+            })
+        }
+        
+    } catch (error) {
+        res.status(400).json({
+            status: "failure",
+            error: error.message
+        })
+    }
+})
+
+router.get('/lead-agree/', auth, async(req, res)=>{
+    const  userConsent = req.query.userConsent
+    try {
+        const leads = await sequelize.models.Lead.findAll({
+            where: {
+                userConsent: userConsent
+            },
+            order: [['updatedAt', 'DESC']],
+        })
         if(leads){
             res.json(leads)
         }else{

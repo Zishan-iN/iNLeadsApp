@@ -5,4 +5,5 @@ export class Lead{
     public phone!:string;
     public intrestedProgram!: string;
     public intrestedUniversity!: string;
+    public userConsent!:string;
 }

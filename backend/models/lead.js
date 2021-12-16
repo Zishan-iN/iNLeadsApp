@@ -27,6 +27,10 @@ const Lead = {
         type: DataTypes.STRING,
         allowNull: false
     },
+    userConsent:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     createdAt:{
         type: DataTypes.DATE,
         allowNull: false
