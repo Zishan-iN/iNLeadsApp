@@ -73,7 +73,8 @@ router.post('/login', async(req, res)=>{
                     name: foundUser.name,
                     profileImage: foundUser.profileImage,
                     role: foundUser.Role.roleName,
-                    token: token 
+                    token: token,
+                    expireTime: expireTime
                 })
               })
         }

@@ -12,7 +12,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   baseApiUrl = environment.API_Url + '/user';
   user = new Subject<User>();
-
+  private clearTimer:any;
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   
@@ -74,8 +74,9 @@ export class AuthService {
   }
 
   loggedIn() {
-    const currentUser = this.currentUserValue;
+    const currentUser:any = this.currentUserValue;
     if (currentUser && currentUser.token) {
+      this.autoLogout(currentUser?.expireTime)
       return true;
     } else {
       return false;
@@ -84,8 +85,18 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
     this.currentUserSubject.next(null!);
-    this.router.navigate(['/']);
+    if(this.clearTimer){
+      clearTimeout(this.clearTimer)
+    }
+  }
+
+  autoLogout(expireTime:number){
+    const expireSession = expireTime*1000
+    this.clearTimer = setTimeout(() => {
+      this.logout()
+    }, expireSession);
   }
 
   private handleError(errorRes: HttpErrorResponse) {

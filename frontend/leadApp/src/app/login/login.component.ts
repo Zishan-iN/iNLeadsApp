@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   hidePassword: boolean = true;
   options = { autoClose: true, redirect: false, redirectLink: '' };
   loginImg = 'assets/images/login-image.png'
+  clearTimer: any;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -32,14 +33,29 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.autoLogout()   
+  }
+
+  autoLogout() {
+    const currentUser = this.authService.currentUserValue;
+    if(currentUser===null){
+      this.clearTimer =  setTimeout(() => {
+                  this.error = 'Session has expired. Please login again.'
+                  this.alertService.error(this.error, this.options)
+                }, 150);
+    }
+  }
+
+  stopTimer(){
+    clearTimeout(this.clearTimer)
   }
 
   submit(){
+    this.stopTimer()
     if(!this.loginForm.valid){
       return;
     }
-
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value).subscribe(res=>{
         const role: any = res.role
