@@ -48,6 +48,12 @@ export class ProfileComponent implements OnInit {
           this.alertService.success(res.message, this.options);
           this.getUserProfile()
         }
+      },error=>{
+        if(error.status === 429){
+          this.alertService.success(error.error, this.options);
+        }else{
+          this.alertService.success('Unknown error occured! try later.', this.options);
+        }
       })
     }
   }

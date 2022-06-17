@@ -33,6 +33,8 @@ export class ForgotPasswordComponent implements OnInit {
     }
     if(this.forgotPasswordForm.valid){
       this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe(res=>{
+        console.log(res.status);
+        
         if (res.status === 'success') {
           this.options.autoClose = true;
           this.alertService.success(res.message, this.options);
@@ -41,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
           }, 5000);
         }
       }, err=>{
-        this.options.autoClose = true;
+        this.options.autoClose = true;        
         this.alertService.error(err, this.options);
       })
     }

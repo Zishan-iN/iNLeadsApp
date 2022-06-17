@@ -45,7 +45,7 @@ export class ThankyouComponent implements OnInit {
   }
 
   addLead(lead: Lead) {
-    this.leadService.addLead(lead).subscribe(res=>{
+    this.leadService.addLead(lead).subscribe(res=>{      
       if(res.status === 'success'){
         this.showSuccess = true
         this.message = `Your form has been submitted successfully and email notification has been sent to your inbox.`
@@ -59,10 +59,12 @@ export class ThankyouComponent implements OnInit {
         }, 5000);
       }else if(error.error.error === 'Email Config Error'){
         this.showError = true
-        this.message =`Error occured while sending you email. Don't worry we have captured your query, we will get in touch with you shortly.`
+        this.message =`Error occured while sending you email. We have saved your query, and we will get in touch with you shortly.`
         setTimeout(() => {
           window.location.href= 'https://inurture.co.in/'
         }, 5000);
+      }else if(error.status === 429){
+        this.message = error.error
       }else{
         this.showError = true
         this.message =`Some unknown error occured.`

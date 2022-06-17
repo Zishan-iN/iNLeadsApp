@@ -101,17 +101,21 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = '';
-    const err: any = errorRes.error.message;
-    switch (err) {
-      case `User doesn't exist`:
+    // const err: any = errorRes.error.message;
+    
+    switch (true) {
+      case errorRes.error.message===`User doesn't exist`:
         errorMessage = `User doesn't exist.`;
         break;
-      case 'Invalid Credentials.':
+      case errorRes.error.message==='Invalid Credentials.':
         errorMessage = 'Invalid Credentials.';
         break;
-      case 'User not registred.':
+      case errorRes.error.message==='User not registred.':
         errorMessage = 'User not registred.';
-        break;
+        break; 
+      case errorRes.status === 429:
+        errorMessage = errorRes.error;
+        break; 
       default:
         errorMessage = 'Unknown error occured, please try later!';
         break;

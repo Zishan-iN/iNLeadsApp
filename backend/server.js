@@ -2,8 +2,9 @@ const express = require('express')
 const dotenv = require('dotenv')
 const sequelize = require('./config/db')
 const cors = require('cors')
-const app=express()
+const rateLimit = require('express-rate-limit')
 const path = require('path');
+const app=express()
 dotenv.config({path:'./config/config.env'})
 
 
@@ -42,13 +43,31 @@ connectDB()
 
 const PORT = process.env.PORT || 3000
 
+const userLimiter = rateLimit({
+    windowMS: 15*60*1000, // 10 minutes
+    max: 8,
+    message: 'Too many requests, please try again after 10 minutes.',
+})
+
+const leadFetchLimiter = rateLimit({
+    windowMS: 15*60*1000, // 15 minutes
+    max: 50,
+    message: 'Too many requests, please try again after 15 minutes.',
+})
+
+const roleLimiter = rateLimit({
+    windowMS: 15*60*1000, // 15 minutes
+    max: 20,
+    message: 'Too many requests, please try again after 15 minutes.'
+})
+
 app.get('/', (req, res)=>{
     res.send(`Server is running at port: ${PORT}`)
 })
 
-app.use('/api/leads', require('./api/lead'))
-app.use('/api/role', require('./api/role'))
-app.use('/api/user', require('./api/user'))
+app.use('/api/leads',leadFetchLimiter, require('./api/lead'))
+app.use('/api/role',roleLimiter, require('./api/role'))
+app.use('/api/user',userLimiter, require('./api/user'))
 
 app.listen(
     PORT, 

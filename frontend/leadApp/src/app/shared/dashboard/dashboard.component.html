@@ -44,11 +44,13 @@
           </mat-nav-list>
           <mat-expansion-panel class="mat-elevation-z0">
             <mat-expansion-panel-header>
-                <mat-panel-title>Settings</mat-panel-title>
+                <mat-panel-title>
+                  Settings
+                </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <a mat-list-item *appHasRole="'admin, user'" [routerLink]="[profileSettingRoute]" routerLinkActive="active">Profile</a>
-                <a mat-list-item *appHasRole="'admin, user'" [routerLink]="[changePasswordRoute]" routerLinkActive="active" >Password</a>
+                <a mat-list-item *appHasRole="'admin, user'" [routerLink]="[profileSettingRoute]">Profile</a>
+                <a mat-list-item *appHasRole="'admin, user'" [routerLink]="[changePasswordRoute]">Password</a>
             </mat-nav-list>
           </mat-expansion-panel>
           <mat-nav-list>

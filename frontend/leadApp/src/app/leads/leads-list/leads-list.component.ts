@@ -61,10 +61,20 @@ export class LeadsListComponent implements OnInit {
 
   getAllLeads() {
     this.leadService.getAllLeads().subscribe(res=>{
-      this.dataSource = new MatTableDataSource<Lead>(res)
-      this.selection = new SelectionModel<Lead>(true, []);
-      this.data =Object.assign(res);
-      this.setDataSourceAttributes()
+      if(res.status === "success"){
+        this.dataSource = new MatTableDataSource<Lead>(res.leads)
+        this.selection = new SelectionModel<Lead>(true, []);
+        this.data = Object.assign(res.leads);
+        this.setDataSourceAttributes()
+      }
+    }, err=>{
+      if(err.status === 429){
+        this.alertService.error(err.error, this.options)
+      }else if(err.status === 500){
+        this.alertService.error("Internal Server Error! Try Later.", this.options)
+      }else{
+        this.alertService.error("Unknown error, please try later.", this.options)
+      }
     })
   }
 
@@ -123,9 +133,9 @@ export class LeadsListComponent implements OnInit {
 
   masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(
-          (row:any) => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(
+        (row: any) => this.selection.select(row));
   }
 
 
@@ -172,7 +182,6 @@ export class LeadsListComponent implements OnInit {
 
   refreshLeads(){
     this.getAllLeads()
-    this.alertService.success('List updated.', this.options)
   }
 
 }

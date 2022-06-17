@@ -19,6 +19,11 @@
      height: 100%;
   }
 
+  .mat-nav-list .active{
+      background-color: #673ab7;
+      color: #fff;
+  }
+
 @media screen and (max-width:768px) {
     .mat-list-item  {
         color: #fff;

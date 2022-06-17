@@ -23,7 +23,7 @@ router.post('/create', async(req, res)=>{
         });
     }else{
         try {
-            const saved= await sequelize.models.Lead.create({
+            const saved = await sequelize.models.Lead.create({
                 firstName,
                 emailAddress,
                 phone,
@@ -83,7 +83,10 @@ router.get('/all-leads',auth, async(req, res)=>{
             }
         )
         if(leads){
-            res.json(leads)
+            res.status(200).json({
+                status: "success",
+                leads: leads,
+            })
         }else{
             res.status(404).json({
                 status: "failure",
@@ -92,7 +95,7 @@ router.get('/all-leads',auth, async(req, res)=>{
         }
         
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             status: "failure",
             error: error.message
         })

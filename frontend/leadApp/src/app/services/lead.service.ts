@@ -16,8 +16,8 @@ export class LeadService {
     return this.http.post<any>(this.baseApiUrl + '/create', lead)
   }
 
-  getAllLeads(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseApiUrl + '/all-leads');
+  getAllLeads(): Observable<any> {
+    return this.http.get<any>(this.baseApiUrl + '/all-leads');
   }
 
   getAllLeadsAgreeToCall(userConsent: string): Observable<any[]> {

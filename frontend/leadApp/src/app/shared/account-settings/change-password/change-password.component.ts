@@ -57,6 +57,9 @@ export class ChangePasswordComponent implements OnInit {
         }
       },error=>{
           this.options.autoClose = true;
+          if(error.status === 429){
+            this.alertService.error(error.error, this.options)
+          }
           this.alertService.error(error.error.message, this.options)
       })
     }
